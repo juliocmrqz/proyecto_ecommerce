@@ -6,8 +6,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
- <!--Meta para el inicio de sesión Google--> 
+  <!--
+
+   Meta para el inicio de sesión Google tomando como página el login de JaP en Github OJO: no funciona localmente
+
   <meta name="google-signin-client_id" content="1020243547644-k0nrdakdlbpddbis8c42m1r58n6gcdqo.apps.googleusercontent.com">
+
+-->
 
   <title>eMercado - Todo lo que busques está aquí</title>
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
@@ -27,7 +32,11 @@
 </head>
 
 <body>
-  <!-- <nav class="site-header sticky-top py-1 bg-dark">
+  <!--
+
+    Oculto la barra de navegación
+
+    <nav class="site-header sticky-top py-1 bg-dark">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
       <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
       <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
@@ -36,7 +45,9 @@
       <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
       <a class="py-2 d-none d-md-inline-block" href="index.html">Login</a>
     </div>
-  </nav> -->
+  </nav>
+
+  -->
   <div class="limiter">
     <div class="container-login100">
       <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
@@ -76,17 +87,24 @@
           </div>
 
           <div class="flex-c-m">
-            <!-- <a href="#" class="login100-social-item bg1">
+            <a href="#" class="login100-social-item bg1">
               <i class="fa fa-facebook"></i>
             </a>
 
             <a href="#" class="login100-social-item bg2">
               <i class="fa fa-twitter"></i>
-            </a> -->
-            <div class="g-signin2" data-onsuccess="onSignIn">
+            </a>
+
+            <!--
+
+              Inicio de sesión Google  
+              <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            
+            -->
+
             <a href="" class="login100-social-item bg3">
               <i class="fa fa-google"></i>
-            </a></div>
+            </a>
           </div>
 
           <div class="flex-col-c p-t-155">
@@ -112,7 +130,11 @@
   <script src="Login/vendor/daterangepicker/daterangepicker.js"></script>
   <script src="Login/vendor/countdowntime/countdowntime.js"></script>
   <script src="Login/js/main.js"></script>
+  <!--
+
   <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+-->
 </body>
 
 </html>
