@@ -1,10 +1,3 @@
-/**
- * Hacer la petición a la URL que contiene el JSON con todos los productos
- * const PRODUCTS_URL = "https://japdevdep.github.io/ecommerce-api/product/all.json";
- * Hay que traernos la información básica de cada producto, para ello hay que tener claro cómo se llama el dato al que queremos acceder desde el json
- * 
- */
-
 const ORDER_ASC_BY_NAME = "AZ";
 const ORDER_DESC_BY_NAME = "ZA";
 const ORDER_BY_PROD_COUNT = "Cant.";
@@ -13,9 +6,12 @@ var currentSortCriteria = undefined;
 var minCount = undefined;
 var maxCount = undefined;
 
+/**
+Función que toma un criterio y un listado que se le pase y devuelve el orden
+en el que va a acceder a los indices de la lista para ordenarlos.
+ */
 function sortProducts(criteria, array) {
     let result = [];
-
     if (criteria === ORDER_ASC_BY_NAME) {
         result = array.sort(function (a, b) {
             if (a.name < b.name) {
@@ -26,7 +22,6 @@ function sortProducts(criteria, array) {
             }
             return 0;
         });
-
     } else if (criteria === ORDER_DESC_BY_NAME) {
         result = array.sort(function (a, b) {
             if (a.name > b.name) {
@@ -54,15 +49,14 @@ function sortProducts(criteria, array) {
     return result;
 }
 
+
 /**
  * Función que toma los valores de productos y los inserta al HTML.
  * Toma las variables del minimo y máximo para filtrar en caso tal que hayan valores minimo, máximo.
  * Toma los valores númericos texto a números enteros para comparaciones matemáticas.
  */
 function showProductsList() {
-
     let htmlContentToAppend = "";
-
     for (let i = 0; i < currentProductsArray.length; i++) {
         let product = currentProductsArray[i];
         // Se inicia el filtro por cantidad
@@ -79,9 +73,10 @@ function showProductsList() {
                      <div class="col">
                          <div class="d-flex w-100 justify-content-between">
                              <h4 class="mb-1">${product.name}</h4>
-                             <small class="text-muted">${product.soldCount} artículos</small>
+                             <small class="text-muted">${product.soldCount} artículos vendidos</small>
                          </div>
                          <p class="mb-1">${product.description}</p>
+                         <strong><p class="mb-1">${product.currency} ${product.cost}</p></strong>
                      </div>
                  </div>
              </a>`
@@ -90,6 +85,7 @@ function showProductsList() {
     //  salgo del for con todos los datos incluidos sin sobreescribirlos
     document.getElementById("product-list-container").innerHTML = htmlContentToAppend;
 }
+
 
 function sortAndShowProductsList(sortCriteria, productsArray) {
     currentSortCriteria = sortCriteria;
@@ -104,25 +100,23 @@ function sortAndShowProductsList(sortCriteria, productsArray) {
     showProductsList();
 }
 
+
 function productsListWithFilters() {
+    // const PRODUCTS_URL = "https://japdevdep.github.io/ecommerce-api/product/all.json";
     getJSONData(PRODUCTS_URL).then(function (productsAsAnObject) {
         if (productsAsAnObject.status === "ok") {
             sortAndShowProductsList(ORDER_ASC_BY_NAME, productsAsAnObject.data);
         }
     });
-
     document.getElementById("sortAsc").addEventListener("click", function () {
         sortAndShowProductsList(ORDER_ASC_BY_NAME);
     });
-
     document.getElementById("sortDesc").addEventListener("click", function () {
         sortAndShowProductsList(ORDER_DESC_BY_NAME);
     });
-
     document.getElementById("sortByCount").addEventListener("click", function () {
         sortAndShowProductsList(ORDER_BY_PROD_COUNT);
     });
-
     document.getElementById("clearRangeFilter").addEventListener("click", function () {
         document.getElementById("rangeFilterCountMin").value = "";
         document.getElementById("rangeFilterCountMax").value = "";
@@ -132,10 +126,8 @@ function productsListWithFilters() {
 
         showProductsList();
     });
-
     document.getElementById("rangeFilterCount").addEventListener("click", function () {
         //Obtengo el mínimo y máximo de los intervalos para filtrar por cantidad
-        //de productos por categoría.
         minCount = document.getElementById("rangeFilterCountMin").value;
         maxCount = document.getElementById("rangeFilterCountMax").value;
 
@@ -150,12 +142,14 @@ function productsListWithFilters() {
         } else {
             maxCount = undefined;
         }
-
         showProductsList();
     });
 }
 
-// Función que se ejecuta una vez que se haya lanzado el evento de
-// que el documento se encuentra cargado, es decir, se encuentran todos los
-// elementos HTML presentes.
+
+/*
+Función que se ejecuta una vez que se haya lanzado el evento de
+que el documento se encuentra cargado, es decir, se encuentran todos los
+elementos HTML presentes.
+*/
 document.addEventListener("DOMContentLoaded", productsListWithFilters());
