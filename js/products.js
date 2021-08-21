@@ -86,16 +86,15 @@ function showProductsList() {
     document.getElementById("product-list-container").innerHTML = htmlContentToAppend;
 }
 
-
+/**
+ * Toma los valores que trae la lista de productos y los ordena según el criterio que se le pase.
+ */
 function sortAndShowProductsList(sortCriteria, productsArray) {
     currentSortCriteria = sortCriteria;
-
     if (productsArray != undefined) {
         currentProductsArray = productsArray;
     }
-
     currentProductsArray = sortProducts(currentSortCriteria, currentProductsArray);
-
     //Muestro productos ordenados
     showProductsList();
 }

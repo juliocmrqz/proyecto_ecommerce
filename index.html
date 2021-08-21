@@ -7,13 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <!--
-
-   Meta para el inicio de sesión Google tomando como página el login de JaP en Github OJO: no funciona localmente
-
-  <meta name="google-signin-client_id" content="1020243547644-k0nrdakdlbpddbis8c42m1r58n6gcdqo.apps.googleusercontent.com">
-
--->
-
+    meta para el inicio de sesión Google tomando como página el login de JaP en Github OJO: no funciona localmente.
+    <meta name="google-signin-client_id" content=""> Acá debe ir mi token privado de Google dev.
+  -->
   <title>eMercado - Todo lo que busques está aquí</title>
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
@@ -29,25 +25,10 @@
   <link rel="stylesheet" type="text/css" href="Login/css/main.css">
   <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
   <link href="css/styles.css" rel="stylesheet">
+  <link rel="shortcut icon" href="img/logo-jap-2020.svg" type="image/x-icon">
 </head>
 
 <body>
-  <!--
-
-    Oculto la barra de navegación
-
-    <nav class="site-header sticky-top py-1 bg-dark">
-    <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
-      <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
-      <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
-      <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-      <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
-      <a class="py-2 d-none d-md-inline-block" href="index.html">Login</a>
-    </div>
-  </nav>
-
-  -->
   <div class="limiter">
     <div class="container-login100">
       <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
@@ -69,51 +50,50 @@
 
           <div class="text-right p-t-8 p-b-31">
             <a href="#">
-              Forgot password?
+              Olvidaste tu contraseña?
             </a>
           </div>
           <div class="container-login100-form-btn">
             <div class="wrap-login100-form-btn">
               <div class="login100-form-bgbtn"></div>
               <button type="submit" class="login100-form-btn">
-                Login
+                Entrar
               </button>
             </div>
           </div>
           <div class="txt1 text-center p-t-54 p-b-20">
             <span>
-              Or Sign Up Using
+              Puedes iniciar sesión con:
             </span>
           </div>
-
+          <!--
+            =================================================================
+            Botones de inicio sesión con redes sociales
+          -->
           <div class="flex-c-m">
             <a href="#" class="login100-social-item bg1">
               <i class="fa fa-facebook"></i>
             </a>
-
             <a href="#" class="login100-social-item bg2">
               <i class="fa fa-twitter"></i>
             </a>
-
             <!--
-
               Inicio de sesión Google  
               <div class="g-signin2" data-onsuccess="onSignIn"></div>
-            
             -->
-
             <a href="#" class="login100-social-item bg3">
               <i class="fa fa-google"></i>
             </a>
           </div>
-
+          <!--
+            Registro en el sitio.
+          -->
           <div class="flex-col-c p-t-155">
             <span class="txt1 p-b-17">
-              Or Sign Up Using
+              Puedes registrarte acá
             </span>
-
             <a href="#" class="txt2">
-              Sign Up
+              Registro
             </a>
           </div>
         </form>
@@ -131,9 +111,8 @@
   <script src="Login/vendor/countdowntime/countdowntime.js"></script>
   <script src="Login/js/main.js"></script>
   <!--
-
+    Script dado por Google Dev para ingresar con la autenticación de Google.
   <script src="https://apis.google.com/js/platform.js" async defer></script>
-
 -->
 </body>
 
