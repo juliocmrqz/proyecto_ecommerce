@@ -29,8 +29,6 @@ function onLoad() {
     });
 }
 
-document.getElementById("NombreUsuario").innerHTML = `<span>${nombreGoogleGlobal}</span>`
-
 document.addEventListener("DOMContentLoaded", function (e) {
-
+    document.getElementById("NombreUsuario").innerHTML = `<span>${nombreGoogleGlobal}</span>`
 });
