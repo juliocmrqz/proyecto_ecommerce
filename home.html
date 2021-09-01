@@ -14,22 +14,23 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link rel="shortcut icon" href="img/logo-jap-2020.svg" type="image/x-icon">
-  
-    <meta name="google-signin-client_id"
+
+  <meta name="google-signin-client_id"
     content="1020243547644-k0nrdakdlbpddbis8c42m1r58n6gcdqo.apps.googleusercontent.com">
 </head>
 <!--Cambiar el login a index, index pasa a ser un home, login puede mantenerse igual-->
 
 <body>
   <nav class="site-header sticky-top py-1 bg-dark">
-    <div class="container d-flex flex-column flex-md-row justify-content-between">
+    <div id="userlocal" class="container d-flex flex-column flex-md-row justify-content-between">
       <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
       <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
       <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
       <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
-      <a class="py-2 d-none d-md-inline-block" href="index.html">Login</a>
-      <a id="NombreUsuario" class="py-2 d-none d-md-inline-block" href="#" onclick="signOut();"></a>
+      <!--Estoy enviando desde el userlocal.js los datos de la barra de navegación a agregar en lugar de hacerlo fisicamente html -->
+      <!-- <a class="py-2 d-none d-md-inline-block" href="index.html">Login</a> -->
+      <!-- <a id="nombreUsuario cerrarsesion" class="py-2 d-none d-md-inline-block" href="#" onclick="signOut();">Sign Out</a> -->
     </div>
   </nav>
   <main role="main">
@@ -114,7 +115,8 @@
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
-  <script src="js/login.js"></script>
+  <!--Script para agregar los datos de la barra de navegación con el usuario anexado al navbar y además el cierre de sesión -->
+  <script src="js/userlocal.js"></script>
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 </body>
 
