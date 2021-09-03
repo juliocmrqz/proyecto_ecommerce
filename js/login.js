@@ -10,7 +10,7 @@ const passwordInicioSesion = document.getElementById("passwordInicioSesion");
 formularioInicioSesion.addEventListener('submit', function (event) {
     let usuariosIniciados = Array({
         usuario: usuarioInicioSesion.value,
-        password: passwordInicioSesion.value,
+        // password: passwordInicioSesion.value,
     })
     localStorage.setItem('usuario', JSON.stringify(usuariosIniciados));
 });

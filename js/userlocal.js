@@ -33,6 +33,7 @@ function signOut() {
     console.log('User signed out.');
   })
   location.href = "index.html";
+  localStorage.removeItem('usuario');
 }
 
 function onLoad() {
