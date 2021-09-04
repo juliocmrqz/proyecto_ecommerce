@@ -5,6 +5,9 @@ var currentProductsArray = [];
 var currentSortCriteria = undefined;
 var minCount = undefined;
 var maxCount = undefined;
+const notFoundText = "Por favor intenta con otro dato";
+const productsContainer = document.getElementById("product-list-container");
+const searchBar = document.getElementById("buscador");
 
 /**
 Función que toma un criterio y un listado que se le pase y devuelve el orden
@@ -83,7 +86,7 @@ function showProductsList() {
         }
     }
     //  salgo del for con todos los datos incluidos sin sobreescribirlos
-    document.getElementById("product-list-container").innerHTML = htmlContentToAppend;
+    productsContainer.innerHTML = htmlContentToAppend;
 }
 
 /**
@@ -120,6 +123,7 @@ function productsListWithFilters() {
     document.getElementById("clearRangeFilter").addEventListener("click", function () {
         document.getElementById("rangeFilterCountMin").value = "";
         document.getElementById("rangeFilterCountMax").value = "";
+        searchBar.value = "";
 
         minCount = undefined;
         maxCount = undefined;
@@ -146,10 +150,56 @@ function productsListWithFilters() {
     });
 }
 
+// Obtengo la barra del buscador y el elemento div donde ingresar los datos
+
+const searchBarFilter = () => {
+    const searchBarText = searchBar.value.toLowerCase();
+    productsContainer.innerHTML = "";
+    let c = 0;
+    for (let product of currentProductsArray) {
+        if (((minCount == undefined) || (minCount != undefined && parseInt(product.cost) >= minCount)) &&
+            ((maxCount == undefined) || (maxCount != undefined && parseInt(product.cost) <= maxCount))) {
+            let nombre = product.name.toLowerCase();
+            if ((nombre.includes(searchBarText))) {
+                productsContainer.innerHTML += `
+            <a href="product-info.html" class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="col-3">
+                    <img src="${product.imgSrc}" alt="${product.description}" class="img-thumbnail">
+                </div>
+                <div class="col">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h4 class="mb-1">${product.name}</h4>
+                        <small class="text-muted">${product.soldCount} artículos vendidos</small>
+                    </div>
+                    <p class="mb-1">${product.description}</p>
+                    <strong><p class="mb-1">${product.currency} ${product.cost}</p></strong>
+                </div>
+            </div>
+        </a>`;
+        // Sumo 1 conforme vaya encontrando valores, si no encuentra pasa a 0 y eso ejecuta el siguiente if.
+                c++;
+            }
+        }
+    }
+    if (c === 0) {
+        productsContainer.innerHTML = `
+        <div class="col">
+        <div class="d-flex w-100 justify-content-between">
+            <h4 class="mb-1">Producto NO encontrado</h4>
+        </div>
+        <p class="mb-1">${notFoundText}</p>
+    </div>`;
+    }
+}
 
 /*
 Función que se ejecuta una vez que se haya lanzado el evento de
 que el documento se encuentra cargado, es decir, se encuentran todos los
 elementos HTML presentes.
 */
-document.addEventListener("DOMContentLoaded", productsListWithFilters());
+
+document.addEventListener("DOMContentLoaded", function (e) {
+    productsListWithFilters()
+    searchBar.addEventListener('keyup', searchBarFilter);
+});
