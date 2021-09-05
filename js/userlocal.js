@@ -1,5 +1,5 @@
 // obtengo el div donde voy a agregar los datos y funcionalidades
-const userlocal = document.getElementById("userlocal");
+const USER_LOCAL = document.getElementById("userlocal");
 
 // función para capitalizar una palabra
 function capitalize(word) {
@@ -12,9 +12,11 @@ let usuarioInicioSesion = JSON.parse(localStorage.getItem('usuario'));
 
 // Considero de no ser null el usuarioInicioSesion insertar el elemento solo considerando el usuario con sus funcionalidades
 if (usuarioInicioSesion != null) {
-  userlocal.innerHTML += `<a id="nombreUsuario" class="py-2 d-none d-md-inline-block cerrarsesion" href="#" onclick="signOut();">${capitalize(usuarioInicioSesion[0].usuario)}</a>`
-} else { // agrego la excepción si no existe nada me libere el boton Login
-  userlocal.innerHTML += `<a class="py-2 d-none d-md-inline-block" href="index.html" onclick="signOut();">Login</a>`
+  USER_LOCAL.innerHTML += `<a id="nombreUsuario" class="py-2 d-none d-md-inline-block cerrarsesion" href="#" onclick="signOut();">${capitalize(usuarioInicioSesion[0].usuario)}</a>`
+}
+// agrego la excepción si no existe nada me libere el boton Login
+else {
+  USER_LOCAL.innerHTML += `<a class="py-2 d-none d-md-inline-block" href="index.html" onclick="signOut();">Login</a>`
 }
 // Si quiero obtener los usuarios que está almacenando la página anterior en consola
 // console.log(usuarioInicioSesion);

@@ -5,9 +5,9 @@ var currentProductsArray = [];
 var currentSortCriteria = undefined;
 var minCount = undefined;
 var maxCount = undefined;
-const notFoundText = "Por favor intenta con otro dato";
-const productsContainer = document.getElementById("product-list-container");
-const searchBar = document.getElementById("buscador");
+const NOT_FOUND_TEXT = "Por favor intenta con otro dato";
+const PRODUCT_CONTAINER = document.getElementById("product-list-container");
+const SEARCH_BAR = document.getElementById("buscador");
 
 /**
 Función que toma un criterio y un listado que se le pase y devuelve el orden
@@ -86,7 +86,7 @@ function showProductsList() {
         }
     }
     //  salgo del for con todos los datos incluidos sin sobreescribirlos
-    productsContainer.innerHTML = htmlContentToAppend;
+    PRODUCT_CONTAINER.innerHTML = htmlContentToAppend;
 }
 
 /**
@@ -123,7 +123,7 @@ function productsListWithFilters() {
     document.getElementById("clearRangeFilter").addEventListener("click", function () {
         document.getElementById("rangeFilterCountMin").value = "";
         document.getElementById("rangeFilterCountMax").value = "";
-        searchBar.value = "";
+        SEARCH_BAR.value = "";
 
         minCount = undefined;
         maxCount = undefined;
@@ -152,16 +152,16 @@ function productsListWithFilters() {
 
 // Obtengo la barra del buscador y el elemento div donde ingresar los datos
 
-const searchBarFilter = () => {
-    const searchBarText = searchBar.value.toLowerCase();
-    productsContainer.innerHTML = "";
+const SEARCH_BAR_FILTER = () => {
+    const searchBarText = SEARCH_BAR.value.toLowerCase();
+    PRODUCT_CONTAINER.innerHTML = "";
     let c = 0;
     for (let product of currentProductsArray) {
         if (((minCount == undefined) || (minCount != undefined && parseInt(product.cost) >= minCount)) &&
             ((maxCount == undefined) || (maxCount != undefined && parseInt(product.cost) <= maxCount))) {
             let nombre = product.name.toLowerCase();
             if ((nombre.includes(searchBarText))) {
-                productsContainer.innerHTML += `
+                PRODUCT_CONTAINER.innerHTML += `
             <a href="product-info.html" class="list-group-item list-group-item-action">
             <div class="row">
                 <div class="col-3">
@@ -183,12 +183,12 @@ const searchBarFilter = () => {
         }
     }
     if (c === 0) {
-        productsContainer.innerHTML = `
+        PRODUCT_CONTAINER.innerHTML = `
         <div class="col">
         <div class="d-flex w-100 justify-content-between">
             <h4 class="mb-1">Producto NO encontrado</h4>
         </div>
-        <p class="mb-1">${notFoundText}</p>
+        <p class="mb-1">${NOT_FOUND_TEXT}</p>
     </div>`;
     }
 }
@@ -201,5 +201,5 @@ elementos HTML presentes.
 
 document.addEventListener("DOMContentLoaded", function (e) {
     productsListWithFilters()
-    searchBar.addEventListener('keyup', searchBarFilter);
+    SEARCH_BAR.addEventListener('keyup', SEARCH_BAR_FILTER);
 });
