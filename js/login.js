@@ -10,6 +10,8 @@ const passwordInicioSesion = document.getElementById("passwordInicioSesion");
 formularioInicioSesion.addEventListener('submit', function (event) {
     let usuariosIniciados = Array({
         usuario: usuarioInicioSesion.value,
+        /* No es necesario almacenar la contraseña por ahora porque no estoy validando contra 
+        base de dato alguna */
         // password: passwordInicioSesion.value,
     })
     localStorage.setItem('usuario', JSON.stringify(usuariosIniciados));
@@ -30,23 +32,6 @@ function onSignIn(googleUser) {
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     window.location.href = "home.html";
 }
-
-/* 
-anexadas al userlocal.js
-
-function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-        console.log('User signed out.');
-    })
-    window.location.href = "index.html";
-}
-function onLoad() {
-    gapi.load('auth2', function () {
-        gapi.auth2.init();
-    });
-}
-*/
 
 /* No utilizo el DOMContentLoaded ya que tengo el script ejecutando al final de la página y son todos eventos externos. 
 document.addEventListener("DOMContentLoaded", function (e) {});

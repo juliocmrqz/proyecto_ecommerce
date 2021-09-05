@@ -91,6 +91,8 @@ function showProductsList() {
 
 /**
  * Toma los valores que trae la lista de productos y los ordena según el criterio que se le pase.
+ * Asigna un criterio actual intercambiable, y asigna una variable para la lista de productos que luego de setearla una
+ * vez puede quedar vacía.
  */
 function sortAndShowProductsList(sortCriteria, productsArray) {
     currentSortCriteria = sortCriteria;
@@ -102,6 +104,9 @@ function sortAndShowProductsList(sortCriteria, productsArray) {
     showProductsList();
 }
 
+/**
+ * Función que toma el listado desde una URL usando un fetch y los devuelve considerando filtros y ordenamiento.
+ */
 function productsListWithFilters() {
     // const PRODUCTS_URL = "https://japdevdep.github.io/ecommerce-api/product/all.json";
     getJSONData(PRODUCTS_URL).then(function (productsAsAnObject) {
@@ -151,7 +156,11 @@ function productsListWithFilters() {
 }
 
 // Obtengo la barra del buscador y el elemento div donde ingresar los datos
-
+/**
+ * TO DO
+ * Buscar cómo mejorar el filtrado de productos en lugar de insertar al HTML que pueda manipular los estilos
+ * de los elementos para no estar moviendo html, malo a nivel de SEO.
+ */
 const SEARCH_BAR_FILTER = () => {
     const searchBarText = SEARCH_BAR.value.toLowerCase();
     PRODUCT_CONTAINER.innerHTML = "";
@@ -177,7 +186,7 @@ const SEARCH_BAR_FILTER = () => {
                 </div>
             </div>
         </a>`;
-        // Sumo 1 conforme vaya encontrando valores, si no encuentra pasa a 0 y eso ejecuta el siguiente if.
+                // Sumo 1 conforme vaya encontrando valores, si no encuentra pasa a 0 y eso ejecuta el siguiente if.
                 c++;
             }
         }
@@ -198,7 +207,6 @@ Función que se ejecuta una vez que se haya lanzado el evento de
 que el documento se encuentra cargado, es decir, se encuentran todos los
 elementos HTML presentes.
 */
-
 document.addEventListener("DOMContentLoaded", function (e) {
     productsListWithFilters()
     SEARCH_BAR.addEventListener('keyup', SEARCH_BAR_FILTER);

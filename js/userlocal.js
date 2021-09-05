@@ -8,25 +8,15 @@ function capitalize(word) {
 }
 
 // Tomo los datos que instancié en usuario dentro de login.js
-let usuarioInicioSesion = JSON.parse(localStorage.getItem('usuario'));
-
 // Considero de no ser null el usuarioInicioSesion insertar el elemento solo considerando el usuario con sus funcionalidades
+// agrego la excepción si no existe nada me libere el boton Login
+let usuarioInicioSesion = JSON.parse(localStorage.getItem('usuario'));
 if (usuarioInicioSesion != null) {
   USER_LOCAL.innerHTML += `<a id="nombreUsuario" class="py-2 d-none d-md-inline-block cerrarsesion" href="#" onclick="signOut();">${capitalize(usuarioInicioSesion[0].usuario)}</a>`
 }
-// agrego la excepción si no existe nada me libere el boton Login
 else {
   USER_LOCAL.innerHTML += `<a class="py-2 d-none d-md-inline-block" href="index.html" onclick="signOut();">Login</a>`
 }
-// Si quiero obtener los usuarios que está almacenando la página anterior en consola
-// console.log(usuarioInicioSesion);
-
-
-/**
- * TO DO
- * Agregar los datos del usuario y probar si funciona todo ok con Google
- */
-
 
 // Función de cierre de sesión sea con Google o normalmente para redirigir al Login page
 function signOut() {
@@ -38,6 +28,10 @@ function signOut() {
   localStorage.removeItem('usuario');
 }
 
+/**
+ * TO DO
+ * Aún me queda por investigar qué está accionando esta función necesaria para el login de Google.
+ */
 function onLoad() {
   gapi.load('auth2', function () {
     gapi.auth2.init();
