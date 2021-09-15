@@ -17,7 +17,6 @@ formularioInicioSesion.addEventListener('submit', function (event) {
     localStorage.setItem('usuario', JSON.stringify(usuariosIniciados));
 });
 
-
 /**
  * USO FUNCION DE GOOGLE PARA INICIO DE SESIÓN
  * PENSAR EN UNA FORMA DE OBTENER LOS DATOS PARA PODER ALMACENARLOS Y MOSTRARLOS EN EL MISMO LOCALSTORAGE SI INICIARA

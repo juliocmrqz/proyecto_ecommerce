@@ -19,23 +19,14 @@
   <!--Meta de Google para inicio Y cierre de sesión -->
   <meta name="google-signin-client_id"
     content="1020243547644-k0nrdakdlbpddbis8c42m1r58n6gcdqo.apps.googleusercontent.com">
-</head>
+  </head>
+  
+  <body>
+    <!-- Barra de navegación actualizada por DOM -->
+    <nav id="navbar-all" class="navbar navbar-expand-md navbar-dark sticky-top bg-dark justify-content-center">
+    </nav>
 
-<body>
-  <!--Pensar en pasar el div dentro del NAV con un ID y pasarlo por DOM a la página.-->
-  <nav class="site-header sticky-top py-1 bg-dark">
-    <div id="userlocal" class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
-      <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
-      <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
-      <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-      <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
-      <!--Estoy enviando desde el userlocal.js los datos de la barra de navegación a agregar en lugar de hacerlo fisicamente html -->
-      <!-- <a class="py-2 d-none d-md-inline-block" href="index.html">Login</a> -->
-      <!-- <a id="nombreUsuario cerrarsesion" class="py-2 d-none d-md-inline-block" href="#" onclick="signOut();">Sign Out</a> -->
-    </div>
-  </nav>
-  <main role="main">
+    <main role="main">
     <section class="jumbotron text-center">
       <div class="m-5">
         <h1></h1>
@@ -116,18 +107,61 @@
   </footer>
   <!-- Bootstrap CDN -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
   </script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
   </script>
   <script src="js/init.js"></script>
   <!--Script para agregar los datos de la barra de navegación con el usuario anexado al navbar y además el cierre de sesión -->
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
-  <script src="js/userlocal.js"></script>
 </body>
 
 </html>
+<!--
+  
+  <div id="userlocal" class="container d-flex flex-column flex-md-row">
+    Boton cuando está reducido el navegador oculte todos los campos del navbar
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+    aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+  Contenedor de los datos de la barra de navegación
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="home.html">
+          Inicio
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="categories.html">
+          Categorías
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="products.html">
+          Productos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="sell.html">
+          Vender
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="cart.html">
+          Mi carrito
+        </a>
+      </li>
+  </ul>
+</div>
+</div>
+
+-->
+<!-- <script src="js/userlocal.js"></script> -->

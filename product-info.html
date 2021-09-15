@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0049)https://getbootstrap.com/docs/4.3/examples/album/ -->
 <html lang="en">
 
 <head>
@@ -8,57 +7,79 @@
   <meta name="description" content="">
   <title>eMercado - Todo lo que busques está aquí</title>
 
-  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
+  <!-- <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/"> -->
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
-  <!-- Bootstrap core CSS -->
+
+  <!-- Bootstrap core & CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <!-- ================================================================================ -->
   <link href="css/styles.css" rel="stylesheet">
   <link rel="shortcut icon" href="img/logo-jap-2020.svg" type="image/x-icon">
+  <!-- ================================================================================ -->
+
   <!--Meta de Google para inicio Y cierre de sesión -->
   <meta name="google-signin-client_id"
     content="1020243547644-k0nrdakdlbpddbis8c42m1r58n6gcdqo.apps.googleusercontent.com">
+  <!-- ================================================================================ -->
 </head>
 
 <body>
-  <nav class="site-header sticky-top py-1 bg-dark">
-    <div id="userlocal" class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
-      <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
-      <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
-      <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-      <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
-      <!--Estoy enviando desde el userlocal.js los datos de la barra de navegación a agregar en lugar de hacerlo fisicamente html -->
-      <!-- <a class="py-2 d-none d-md-inline-block" href="index.html">Login</a> -->
-      <!-- <a id="nombreUsuario cerrarsesion" class="py-2 d-none d-md-inline-block" href="#" onclick="signOut();">Sign Out</a> -->
-    </div>
+  
+  <!-- Barra de navegación actualizada por DOM -->
+  <nav id="navbar-all" class="navbar navbar-expand-md navbar-dark sticky-top bg-dark justify-content-center">
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 3 (Fecha de entrega: 19/09/2021) y Entrega 4 (Fecha de entrega:
-        03/10/2021).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
-    </div>
-  </div>
-  <footer class="text-muted">
-    <div class="container">
-      <p class="float-right">
-        <a href="#">Volver arriba</a>
-      </p>
-      <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
-      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
-    </div>
-  </footer>
-  <div id="spinner-wrapper">
-    <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+
+
+  <div class="container">
+    <!-- Titulo de la página -->
+    <h1 id="product-info-title">
+      Información del Producto
+    </h1>
+    <div id="product-info-container">
+      <div id="product-info">
+        <div id="main-image-container">
+          <img id="main-image">
+        </div>
+
+        <div id="product-info-display">
+          <h2 id="product-name"></h1>
+            <p id="product-info-category">
+              Categoría: 
+            </p>
+            <h3 class"w-100">Precio: ${currentProduct.currency} ${currentProduct.cost}</h3>
+            <div class="row">
+              <small class="text-muted col-md-12">${currentProduct.soldCount} artículos vendidos</small>
+            </div>
+            <div class="row">
+            </div>
+            <p class="mt-2 mb-0 font-weight-bold">Descripción</p>
+            <p class="">${currentProduct.description}</p>
+          </div>
+        </div>
+      </div>
+      <!--     
+        <div class="container">
+          <div id="product-info"></div>
+        </div> -->
+        
+        <!-- Footer de JaP -->
+        <footer class="text-muted">
+          <div class="container">
+            <p class="float-right">
+              <a href="#">Volver arriba</a>
+            </p>
+        <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
+        <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+      </div>
+    </footer>
+    <div id="spinner-wrapper">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
   </div>
   <!-- Bootstrap CDN -->
@@ -73,9 +94,18 @@
   </script>
   <script src="js/init.js"></script>
   <!--Script para agregar los datos de la barra de navegación con el usuario anexado al navbar y además el cierre de sesión -->
-  <script src="js/userlocal.js"></script>
   <script src="js/product-info.js"></script>
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 </body>
 
 </html>
+<!-- <nav class="site-header sticky-top py-1 bg-dark">
+  <div id="userlocal" class="container d-flex flex-column flex-md-row justify-content-between">
+    <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
+    <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
+    <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
+    <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
+    <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
+  </div>
+</nav> -->
+<!-- <script src="js/userlocal.js"></script> -->

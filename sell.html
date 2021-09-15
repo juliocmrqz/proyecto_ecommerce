@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0049)https://getbootstrap.com/docs/4.3/examples/album/ -->
 <html lang="en">
 
 <head>
@@ -9,7 +8,6 @@
   <meta name="description" content="">
   <title>eMercado - Todo lo que busques está aquí</title>
 
-  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
   <style>
@@ -28,30 +26,24 @@
       }
     }
   </style>
+
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <!-- ================================================================================ -->
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/dropzone.css" rel="stylesheet">
   <link rel="shortcut icon" href="img/logo-jap-2020.svg" type="image/x-icon">
+  <!-- ================================================================================ -->
+
   <!--Meta de Google para inicio Y cierre de sesión -->
   <meta name="google-signin-client_id"
     content="1020243547644-k0nrdakdlbpddbis8c42m1r58n6gcdqo.apps.googleusercontent.com">
+  <!-- ================================================================================ -->
 </head>
 
 <body>
-  <nav class="site-header sticky-top py-1 bg-dark">
-    <div id="userlocal" class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
-      <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
-      <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
-      <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-      <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
-      <!--Estoy enviando desde el userlocal.js los datos de la barra de navegación a agregar en lugar de hacerlo fisicamente html -->
-      <!-- <a class="py-2 d-none d-md-inline-block" href="index.html">Login</a> -->
-      <!-- <a id="nombreUsuario cerrarsesion" class="py-2 d-none d-md-inline-block" href="#" onclick="signOut();">Sign Out</a> -->
-    </div>
+  <!-- Barra de navegación actualizada por DOM -->
+  <nav id="navbar-all" class="navbar navbar-expand-md navbar-dark sticky-top bg-dark justify-content-center">
   </nav>
   <div class="container">
     <div class="text-center p-4">
@@ -91,7 +83,7 @@
             <div class="col-md-3 mb-3">
               <label for="zip">Costo</label>
               <input type="number" class="form-control" id="productCostInput" placeholder="" required="" value="0"
-                min="0">
+              min="0">
               <div class="invalid-feedback">
                 El costo debe ser mayor que 0.
               </div>
@@ -128,7 +120,7 @@
             <div class="col-md-3 mb-3">
               <label for="productCountInput">Cantidad en stock</label>
               <input type="number" class="form-control" id="productCountInput" placeholder="" required="" value="1"
-                min="0">
+              min="0">
               <div class="invalid-feedback">
                 La cantidad es requerida.
               </div>
@@ -139,7 +131,7 @@
           <div class="d-block my-3">
             <div class="custom-control custom-radio">
               <input id="goldradio" name="publicationType" type="radio" class="custom-control-input" checked=""
-                required="">
+              required="">
               <label class="custom-control-label" for="goldradio">Gold (13%)</label>
             </div>
             <div class="custom-control custom-radio">
@@ -153,7 +145,7 @@
             <div class="row">
               <button type="button" class="m-1 btn btn-link" data-toggle="modal" data-target="#contidionsModal">Ver
                 condiciones</button>
-            </div>
+              </div>
           </div>
           <hr class="mb-4">
           <h4 class="mb-3">Costos</h4>
@@ -195,7 +187,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-
+  
   <div class="modal fade" tabindex="-1" role="dialog" id="contidionsModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -211,17 +203,17 @@
               <h5 class="text-warning">Gold (13%)</h5>
               <p class="muted text-justify">Tu producto se verá de forma promocionada en portada, además de las
                 condiciones de Premium y Estándar.</p>
-            </div>
-            <hr>
-            <div class="row">
-              <h5 class="text-primary">Stándar (7%)</h5>
-              <p class="muted text-justify">Se mostrará el producto en los primeros lugares de resultados de búsqueda,
-                así cómo cuando se ingrese a la categoría que pertenezca.</p>
-            </div>
-            <hr>
-            <div class="row">
-              <h5 class="text-secondary">Estándar (3%)</h5>
-              <p class="muted text-justify">El producto se listará en la categoría correspondiente, así como en los
+              </div>
+              <hr>
+              <div class="row">
+                <h5 class="text-primary">Stándar (7%)</h5>
+                <p class="muted text-justify">Se mostrará el producto en los primeros lugares de resultados de búsqueda,
+                  así cómo cuando se ingrese a la categoría que pertenezca.</p>
+                </div>
+                <hr>
+                <div class="row">
+                  <h5 class="text-secondary">Estándar (3%)</h5>
+                  <p class="muted text-justify">El producto se listará en la categoría correspondiente, así como en los
                 resultados de búsquedas que coincidan con las palabras claves en el nombre.</p>
             </div>
           </div>
@@ -240,6 +232,7 @@
       <div></div>
     </div>
   </div>
+  
   <!-- Bootstrap CDN -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
@@ -250,12 +243,23 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
   </script>
+  <!-- ================================================ -->
+  
   <script src="js/dropzone.js"></script>
   <script src="js/init.js"></script>
   <!--Script para agregar los datos de la barra de navegación con el usuario anexado al navbar y además el cierre de sesión -->
-  <script src="js/userlocal.js"></script>
   <script src="js/sell.js"></script>
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 </body>
 
 </html>
+<!-- <nav class="site-header sticky-top py-1 bg-dark">
+  <div id="userlocal" class="container d-flex flex-column flex-md-row justify-content-between">
+    <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
+    <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
+    <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
+    <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
+    <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
+  </div>
+</nav> -->
+<!-- <script src="js/userlocal.js"></script> -->
