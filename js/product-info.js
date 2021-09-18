@@ -18,17 +18,12 @@ function ShowProductInfo(productInfo) {
   if (productInfo != undefined) {
     currentProduct = productInfo
   }
-
   // Como extra tomo el nombre del producto y lo anexo al title del documento en HTML
   document.title = `eMercado - ${currentProduct.name}`;
-
   /*
   { me falta por mostrar los siguientes datos en la página del JSON de info producto
-    "soldCount": 14,
     "relatedProducts": [1, 3]
-}
    */
-
   // contenedor de la información del producto
   PRODUCT_INFO_CONTAINER.setAttribute("class", "small-container");
   PRODUCT_INFO.setAttribute("class", "row");
@@ -51,21 +46,16 @@ function ShowProductInfo(productInfo) {
   // Descripción del producto
   PRODUCT_INFO_DESCRIPTION.innerHTML = `${currentProduct.description}`;
   PRODUCT_INFO_DESCRIPTION.style.textAlign = "justify";
-
-
-
-
-
   // Contenedor de las imagenes del producto
   IMAGE_CONTAINER.innerHTML = `<div id="carouselProducto" class="carousel slide" data-ride="carousel"><div class="carousel-inner"></div></div>`
   // Como me traigo una colección de elementos con ese nombre, debo posicionarme en el inicial
   let carouselContainer = document.getElementsByClassName("carousel-inner")[0]
-  // Recorro la lista de imagenes para poder insertarlas
   for (let i = 0; i < currentProduct.images.length; i++) {
     const imagen = currentProduct.images[i];
     carouselContainer.innerHTML += `<div class="carousel-item"><img src="${imagen}" class="d-block w-100" alt="Imagen del producto"></div>`
   }
-  // Traigo una colección de elementos con la clase carousel-item para poder ir agregandole la clase active y que se muestre en el carousel.
+  /* Traigo una colección de elementos con la clase carousel-item para poder ir 
+    agregandole la clase active y que se muestre en el carousel.*/
   let imagenes = document.getElementsByClassName("carousel-item")
   imagenes[0].className += " active"
   //inserto los controles para el cambio de imagen
