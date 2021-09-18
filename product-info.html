@@ -37,16 +37,16 @@
     <div id="product-info-container">
       <div id="product-info">
         <div id="main-image-container">
-          <img id="main-image">
         </div>
 
+        <!-- Contenedor de la información del producto -->
         <div id="product-info-display">
           <h2 id="product-name">
             </h1>
             <p id="product-info-category">
               Categoría:
             </p>
-            <h3 class"w-100">Precio: ${currentProduct.currency} ${currentProduct.cost}</h3>
+            <h3 id="product-info-price" class="w-100"></h3>
             <div class="row">
               <small class="text-muted col-md-12">${currentProduct.soldCount} artículos vendidos</small>
             </div>
@@ -57,10 +57,37 @@
         </div>
       </div>
     </div>
-    <!--     
-        <div class="container">
-          <div id="product-info"></div>
-        </div> -->
+    <!-- ================================================================= -->
+    
+        
+      <div class="container">
+        <div id="product-carousel-info"></div>
+      </div>
+
+    <!-- Contenedor de Comentarios y puntuaciones -->
+    <div class="form-group mt-3">
+      <form class="row" id="formulario-comentarios">
+        <label class="font-weight-bold" for="formulario-comentarios">Puntuaciones y Comentarios</label>
+        <div class="stars-container col-12">
+          <input type="radio" name="rating" value="5" id="5"><label for="5"><i class="fas fa-star"></i></label>
+          <input type="radio" name="rating" value="4" id="4"><label for="4"><i class="fas fa-star"></i></label>
+          <input type="radio" name="rating" value="3" id="3"><label for="3"><i class="fas fa-star"></i></label>
+          <input type="radio" name="rating" value="2" id="2"><label for="2"><i class="fas fa-star"></i></label>
+          <input type="radio" name="rating" value="1" id="1"><label for="1"><i class="fas fa-star"></i></label>
+        </div>
+        <textarea name="comentarios-puntuaciones" id="comentarios" class="form-control"
+          placeholder="Comentarios"></textarea>
+        <button id="boton-comentario" class="btn btn-dark mt-2" type="submit">
+          Comentar
+        </button>
+      </form>
+    </div>
+
+    <!-- Contenedor de los comentarios que se traen del JSON así como los comentarios que se vayan agregando nuevos  -->
+
+    <div id="comentarios-container"></div>
+
+    <!-- ====================================================================================== -->
 
     <!-- Footer de JaP -->
     <footer class="text-muted">

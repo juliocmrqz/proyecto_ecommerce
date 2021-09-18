@@ -144,8 +144,33 @@ a.custom-card:hover {
   color: inherit;
   text-decoration: inherit;
 }
-
+/* MARCA DEL VALOR DE LAS ESTRELLAS EN LOS COMENTARIOS */
 .checked {
-  color: orange;
+  color: #05e690;
 }
 
+/* COMIENZO DE LAS ESTRELLAS EN EL FORMULARIO */
+.stars-container {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: left;
+}
+
+.stars-container label {
+  transition: all 0.2s ease;
+}
+
+.stars-container input {
+  display: none;
+}
+
+input:not(:checked)~label:hover,
+input:not(:checked)~label:hover~label {
+  color: #05e690;
+}
+
+input:checked ~ label{
+  color: #05e690;
+}
+/* FIN DE LAS ESTRELLAS DEL FORMULARIO */
