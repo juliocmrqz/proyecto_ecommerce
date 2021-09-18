@@ -1,4 +1,3 @@
-const PRODUCT_INFORMATION_TITLE = document.getElementById("product-info-title");
 const PRODUCT_INFO_CONTAINER = document.getElementById("product-info-container");
 const PRODUCT_INFO = document.getElementById("product-info");
 const PRODUCT_INFO_DISPLAY = document.getElementById("product-info-display");
@@ -8,6 +7,8 @@ const PRODUCT_CATEGORY = document.getElementById("product-info-category");
 const PRODUCTS_INFO_URL = document.createElement("a");
 const COMENTARIOS = document.getElementById("comentarios-container");
 const PRODUCT_INFO_PRICE = document.getElementById("product-info-price");
+const PRODUCT_INFO_SOLDCOUNT = document.getElementById("product-info-soldcount");
+const PRODUCT_INFO_DESCRIPTION = document.getElementById("product-info-description");
 const FORMULARIO_COMENTARIOS = document.getElementById("formulario-comentarios");
 let currentProduct = [];
 let comentariosLista = [];
@@ -17,80 +18,70 @@ function ShowProductInfo(productInfo) {
   if (productInfo != undefined) {
     currentProduct = productInfo
   }
+
+  // Como extra tomo el nombre del producto y lo anexo al title del documento en HTML
   document.title = `eMercado - ${currentProduct.name}`;
 
   /*
-  {
-    "name": "Chevrolet Onix Joy",
-    "description": "Potenciá tu actitud con Onix Joy que, además de destacarse por su diseño juvenil y moderno, te ofrecé una óptima autonomía, un desempeño equilibrado y el máximo confort interior. \u003cbr\u003eYa sea un viaje largo o un simple paseo por la ciudad, el confort es uno de los puntos fuertes del Onix. Esta versión incluye aire acondicionado, asientos tapizados en tela y gran espacio interior que te garantiza el máximo confort.",
-    "cost": 13500,
-    "currency": "USD",
+  { me falta por mostrar los siguientes datos en la página del JSON de info producto
     "soldCount": 14,
-    "category": "Autos",
-    "images": [
-        "img/prod1.jpg",
-        "img/prod1_1.jpg",
-        "img/prod1_2.jpg",
-        "img/prod1_3.jpg",
-        "img/prod1_4.jpg"
-    ],
     "relatedProducts": [1, 3]
 }
    */
 
-
-  // titulo de la página de producto
-  PRODUCT_INFORMATION_TITLE.setAttribute("class", "mt-5 mb-5 text-center font-weight-bolder");
-
   // contenedor de la información del producto
   PRODUCT_INFO_CONTAINER.setAttribute("class", "small-container");
   PRODUCT_INFO.setAttribute("class", "row");
-
   // contenedor de las imagenes del producto
-  IMAGE_CONTAINER.setAttribute("class", "text-center col-md-6");
-
   PRODUCT_INFO_DISPLAY.setAttribute("class", "col-md-6")
+  IMAGE_CONTAINER.setAttribute("class", "text-center col-md-6");
   PRODUCT_NAME.setAttribute("class", "font-weight-bold w-100");
   PRODUCT_NAME.innerHTML = currentProduct.name;
-
+  // Categoría del producto
   PRODUCT_CATEGORY.setAttribute("class", "text-muted");
   PRODUCTS_INFO_URL.href = "products.html";
   PRODUCTS_INFO_URL.innerHTML = currentProduct.category;
-
+  PRODUCT_CATEGORY.appendChild(PRODUCTS_INFO_URL);
+  // Precio del producto
   PRODUCT_INFO_PRICE.setAttribute("class", "w-100");
   PRODUCT_INFO_PRICE.innerHTML = `${currentProduct.currency} ${currentProduct.cost}`;
+  // Cantidad de productos vendidos
+  PRODUCT_INFO_SOLDCOUNT.setAttribute("class", "text-muted");
+  PRODUCT_INFO_SOLDCOUNT.innerHTML = `${currentProduct.soldCount} artículos vendidos`;
+  // Descripción del producto
+  PRODUCT_INFO_DESCRIPTION.innerHTML = `${currentProduct.description}`;
+  PRODUCT_INFO_DESCRIPTION.style.textAlign = "justify";
 
 
-  PRODUCT_CATEGORY.appendChild(PRODUCTS_INFO_URL);
 
-  IMAGE_CONTAINER.innerHTML = `
-  <div id="carouselProducto" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner"></div>
-  </div>`
 
+
+  // Contenedor de las imagenes del producto
+  IMAGE_CONTAINER.innerHTML = `<div id="carouselProducto" class="carousel slide" data-ride="carousel"><div class="carousel-inner"></div></div>`
+  // Como me traigo una colección de elementos con ese nombre, debo posicionarme en el inicial
   let carouselContainer = document.getElementsByClassName("carousel-inner")[0]
+  // Recorro la lista de imagenes para poder insertarlas
   for (let i = 0; i < currentProduct.images.length; i++) {
     const imagen = currentProduct.images[i];
-    carouselContainer.innerHTML += `
-    <div class="carousel-item">
-      <img src="${imagen}" class="d-block w-100" alt="...">
-    </div>`
-
+    carouselContainer.innerHTML += `<div class="carousel-item"><img src="${imagen}" class="d-block w-100" alt="Imagen del producto"></div>`
   }
+  // Traigo una colección de elementos con la clase carousel-item para poder ir agregandole la clase active y que se muestre en el carousel.
   let imagenes = document.getElementsByClassName("carousel-item")
   imagenes[0].className += " active"
-  //inserto los controles del slider
-  carouselContainer.innerHTML += `
-  <a class="carousel-control-prev" href="#carouselProducto" role="button" data-slide="prev">
+  //inserto los controles para el cambio de imagen
+  carouselContainer.innerHTML += `<a class="carousel-control-prev" href="#carouselProducto" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
+    <span class="sr-only">Previous</span></a>
   <a class="carousel-control-next" href="#carouselProducto" role="button" data-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>`
 }
 
+/**
+ * Función para ordenar los comentarios que recibe del JSON ordenandolos por la conversión del 
+ * tiempo en el que fue hecho a formato número para poder ordenar
+ */
 function sortComentarios(array) {
   array.sort(function (a, b) {
     var dateA = new Date(a.dateTime).getTime();
@@ -100,32 +91,31 @@ function sortComentarios(array) {
   return array;
 }
 
-// REVISAR QUÉ PASA CON ESTE COMENTARIO QUE NO LO AGREGA
-// REVISAR DEL ARCHIVO DE CREAR UN NUEVO COMENTARIO HECHO EN CLASE SOLO QUE CAMBIANDO A OBJETO A IMPRIMIR EN HTML
+/**
+ * Función que toma el evento submit del formulario para 
+ * Tomar la fecha actual de sistema
+ * Obtener los datos del formulario
+ * Limpiar el contenedor de los comentarios 
+ * Insertar en el objeto newcomment los datos del formulario
+ * Mostrar los comentarios llamados del Objeto comentariosLista
+ */
+function newCommentToAppendToCommentsObject() {
+  FORMULARIO_COMENTARIOS.addEventListener("submit", function (e) {
+    e.preventDefault();
+    let date = new Date();
 
-// function newComentario() {
-//   let date = new Date();
-//   var newcommment = {
-//     score: document.getElementById("comentarios-stars").value,
-//     description: document.getElementById("comentarios").value,
-//     user: localStorage.getItem('usuario'),
-//     dateTime: date
-//   };
+    let newcomment = {
+      score: parseInt(document.querySelector('input[type="radio"]:checked').value),
+      description: document.getElementById("comentarios").value,
+      user: JSON.parse(localStorage.getItem('usuario'))[0].usuario,
+      dateTime: `${date.getFullYear()}-${(date.getMonth()+1 < 10) ? "0" : ""}${date.getMonth()}-${date.getDate() < 10 ? "0" : ""}${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+    };
 
-FORMULARIO_COMENTARIOS.addEventListener("submit", function (e) {
-  e.preventDefault();
-  let date = new Date();
-  
-  let newcomment = {
-    score: parseInt(document.querySelector('input[type="radio"]:checked').value),
-    description: document.getElementById("comentarios").value,
-    user: JSON.parse(localStorage.getItem('usuario'))[0].usuario,
-    dateTime: `${date.getFullYear()}-${(date.getMonth()+1 < 10) ? "0" : ""}${date.getMonth()}-${date.getDate() < 10 ? "0" : ""}${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-  };
-  COMENTARIOS.innerHTML = '';
-  comentariosLista.push(newcomment);
-  comentariosJSON();
-})
+    COMENTARIOS.innerHTML = '';
+    comentariosLista.push(newcomment);
+    comentariosJSON();
+  })
+}
 
 function comentariosJSON() {
   comentariosLista = sortComentarios(comentariosLista);
@@ -143,7 +133,8 @@ function comentariosJSON() {
     COMENTARIOS.innerHTML += `<div class="row"><div class="col"><div class="d-flex w-100 justify-content-between">
         <h6 class="font-weight-bold">${comentarios.user}</h6>
         <small class="text-muted">${comentarios.dateTime}</small></div>
-        <p class="mb-3">${comentarios.description}</p></div></div>`
+        <p class="mb-3">${comentarios.description}</p></div></div>
+        <hr class="mt-0">`
   };
   FORMULARIO_COMENTARIOS.reset();
 }
@@ -160,6 +151,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     if (resultObj.status === "ok") {
       comentariosLista = resultObj.data;
       comentariosJSON();
+      newCommentToAppendToCommentsObject();
     }
   });
 });

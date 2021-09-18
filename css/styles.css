@@ -174,3 +174,7 @@ input:checked ~ label{
   color: #05e690;
 }
 /* FIN DE LAS ESTRELLAS DEL FORMULARIO */
+
+.comentario-unico:hover {
+  background-color: lightgrey;
+}

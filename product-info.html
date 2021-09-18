@@ -28,12 +28,14 @@
   <!-- Barra de navegación actualizada por DOM -->
   <nav id="navbar-all" class="navbar navbar-expand-md navbar-dark sticky-top bg-dark justify-content-center">
   </nav>
+  <!-- =========================================================================================== -->
 
   <div class="container">
     <!-- Titulo de la página -->
-    <h1 id="product-info-title">
+    <h1 class="mt-5 mb-5 text-center font-weight-bolder" id="product-info-title">
       Información del Producto
     </h1>
+    <!-- =========================================================================================== -->
     <div id="product-info-container">
       <div id="product-info">
         <div id="main-image-container">
@@ -47,27 +49,18 @@
               Categoría:
             </p>
             <h3 id="product-info-price" class="w-100"></h3>
-            <div class="row">
-              <small class="text-muted col-md-12">${currentProduct.soldCount} artículos vendidos</small>
-            </div>
-            <div class="row">
-            </div>
+            <small id="product-info-soldcount"></small>
             <p class="mt-2 mb-0 font-weight-bold">Descripción</p>
-            <p class="">${currentProduct.description}</p>
+            <p id="product-info-description">${currentProduct.description}</p>
         </div>
       </div>
     </div>
-    <!-- ================================================================= -->
+    <!-- =========================================================================================== -->
     
-        
-      <div class="container">
-        <div id="product-carousel-info"></div>
-      </div>
-
     <!-- Contenedor de Comentarios y puntuaciones -->
     <div class="form-group mt-3">
       <form class="row" id="formulario-comentarios">
-        <label class="font-weight-bold" for="formulario-comentarios">Puntuaciones y Comentarios</label>
+        <label class="font-weight-bold" for="formulario-comentarios">Agregar comentarios y puntuaciones</label>
         <div class="stars-container col-12">
           <input type="radio" name="rating" value="5" id="5"><label for="5"><i class="fas fa-star"></i></label>
           <input type="radio" name="rating" value="4" id="4"><label for="4"><i class="fas fa-star"></i></label>
@@ -82,13 +75,14 @@
         </button>
       </form>
     </div>
-
+    <!-- =========================================================================================== -->
+    
     <!-- Contenedor de los comentarios que se traen del JSON así como los comentarios que se vayan agregando nuevos  -->
-
+    <h4 class="font-weight-bold">Opiniones del producto</h4>
     <div id="comentarios-container"></div>
-
-    <!-- ====================================================================================== -->
-
+    <!-- =========================================================================================== -->
+    
+    
     <!-- Footer de JaP -->
     <footer class="text-muted">
       <div class="container">
@@ -108,6 +102,8 @@
       </div>
     </div>
   </div>
+  <!-- =========================================================================================== -->
+
   <!-- Bootstrap CDN -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
@@ -119,9 +115,11 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
   </script>
   <script src="js/init.js"></script>
+  <!-- =========================================================================================== -->
   <!--Script para agregar los datos de la barra de navegación con el usuario anexado al navbar y además el cierre de sesión -->
   <script src="js/product-info.js"></script>
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+  <!-- =========================================================================================== -->
 </body>
 
 </html>
