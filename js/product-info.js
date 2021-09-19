@@ -1,3 +1,4 @@
+// Obtengo los contenedores donde se van a agregar los datos para poder manejarlos por JS
 const PRODUCT_INFO_CONTAINER = document.getElementById("product-info-container");
 const PRODUCT_INFO = document.getElementById("product-info");
 const PRODUCT_INFO_DISPLAY = document.getElementById("product-info-display");
@@ -10,20 +11,19 @@ const PRODUCT_INFO_PRICE = document.getElementById("product-info-price");
 const PRODUCT_INFO_SOLDCOUNT = document.getElementById("product-info-soldcount");
 const PRODUCT_INFO_DESCRIPTION = document.getElementById("product-info-description");
 const FORMULARIO_COMENTARIOS = document.getElementById("formulario-comentarios");
+// Creo las listas necesarias para poder anexar tanto la lista de datos que me devuelve para la información del producto
+// como los datos necesarios para mostrar los comentarios que se van agregando a la página
 let currentProduct = [];
 let comentariosLista = [];
 
-// Funciones para mostrar las imagenes de los productos en un carousel hecho con bootstrap
+// Función para mostrar la información de todo el producto
 function ShowProductInfo(productInfo) {
   if (productInfo != undefined) {
     currentProduct = productInfo
   }
   // Como extra tomo el nombre del producto y lo anexo al title del documento en HTML
   document.title = `eMercado - ${currentProduct.name}`;
-  /*
-  { me falta por mostrar los siguientes datos en la página del JSON de info producto
-    "relatedProducts": [1, 3]
-   */
+
   // contenedor de la información del producto
   PRODUCT_INFO_CONTAINER.setAttribute("class", "small-container");
   PRODUCT_INFO.setAttribute("class", "row");
@@ -47,38 +47,29 @@ function ShowProductInfo(productInfo) {
   PRODUCT_INFO_DESCRIPTION.innerHTML = `${currentProduct.description}`;
   PRODUCT_INFO_DESCRIPTION.style.textAlign = "justify";
   // Contenedor de las imagenes del producto
-  IMAGE_CONTAINER.innerHTML = `<div id="carouselProducto" class="carousel slide" data-ride="carousel"><div class="carousel-inner"></div></div>`
+  // Traigo una colección de elementos con la clase carousel-item para poder ir agregandole la clase active y que se muestre en el carousel
   // Como me traigo una colección de elementos con ese nombre, debo posicionarme en el inicial
+  //inserto los controles para el cambio de imagen
+  IMAGE_CONTAINER.innerHTML = `<div id="product-images-carousel" class="carousel slide" data-ride="carousel"><div class="carousel-inner"></div></div>`
   let carouselContainer = document.getElementsByClassName("carousel-inner")[0]
   for (let i = 0; i < currentProduct.images.length; i++) {
-    const imagen = currentProduct.images[i];
-    carouselContainer.innerHTML += `<div class="carousel-item"><img src="${imagen}" class="d-block w-100" alt="Imagen del producto"></div>`
+    const listaDeImagenes = currentProduct.images[i];
+    carouselContainer.innerHTML += `<div class="carousel-item"><img src="${listaDeImagenes}" class="d-block w-100" alt="Imagen del producto"></div>`
   }
-  /* Traigo una colección de elementos con la clase carousel-item para poder ir 
-    agregandole la clase active y que se muestre en el carousel.*/
-  let imagenes = document.getElementsByClassName("carousel-item")
-  imagenes[0].className += " active"
-  //inserto los controles para el cambio de imagen
-  carouselContainer.innerHTML += `<a class="carousel-control-prev" href="#carouselProducto" role="button" data-slide="prev">
+  let imagesInCarousel = document.getElementsByClassName("carousel-item")
+  imagesInCarousel[0].className += " active"
+  carouselContainer.innerHTML += `<a class="carousel-control-prev" href="#product-images-carousel" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span></a>
-  <a class="carousel-control-next" href="#carouselProducto" role="button" data-slide="next">
+  <a class="carousel-control-next" href="#product-images-carousel" role="button" data-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>`
-}
 
-/**
- * Función para ordenar los comentarios que recibe del JSON ordenandolos por la conversión del 
- * tiempo en el que fue hecho a formato número para poder ordenar
- */
-function sortComentarios(array) {
-  array.sort(function (a, b) {
-    var dateA = new Date(a.dateTime).getTime();
-    var dateB = new Date(b.dateTime).getTime();
-    return dateA < dateB ? 1 : -1; // Investigar qué hace estructurar de esta forma!!!!!!!!!!
-  });
-  return array;
+  /*
+  { me falta por mostrar los siguientes datos en la página del JSON de info producto
+    "relatedProducts": [1, 3]
+   */
 }
 
 /**
@@ -107,8 +98,27 @@ function newCommentToAppendToCommentsObject() {
   })
 }
 
+
+/**
+ * Función que toma los comentarios que recibe del JSON ordenandolos por la conversión del 
+ * tiempo en el que fue hecho a formato número para poder ordenar
+ */
+function sortComentariosByDate(listaDeComentarios) {
+  listaDeComentarios.sort(function (a, b) {
+    var dateA = new Date(a.dateTime).getTime();
+    var dateB = new Date(b.dateTime).getTime();
+    return dateA < dateB ? 1 : -1; // Investigar qué hace estructurar de esta forma!!!!!!!!!!
+  });
+  return listaDeComentarios;
+}
+
+/**
+ * toma los comentarios que vienen del JSON
+ * ordena los comentarios
+ * recorre los comentarios tanto para la puntuación como para agregarlos al contenedor HTML que se creó
+ */
 function comentariosJSON() {
-  comentariosLista = sortComentarios(comentariosLista);
+  comentariosLista = sortComentariosByDate(comentariosLista);
   for (let i = 0; i < comentariosLista.length; i++) {
     let comentarios = comentariosLista[i];
 
