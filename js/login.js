@@ -25,10 +25,8 @@ formularioInicioSesion.addEventListener('submit', function (event) {
  */
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
-    let usuarioIniciadoGoogle = Array({
-        usuario: profile.getName(),
-    })
-    localStorage.setItem('usuarioGoogle', JSON.stringify(usuarioIniciadoGoogle));
+    let usuarioIniciadoGoogle = profile.getName();
+    localStorage.setItem('usuarioGoogle', usuarioIniciadoGoogle);
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());
     console.log('Image URL: ' + profile.getImageUrl());
