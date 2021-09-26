@@ -105,7 +105,7 @@ function loginUserAllPages() {
   }
 
   // Usuario iniciando sesión con Google
-  let usuarioIniciadoGoogle = JSON.parse(localStorage.getItem('usuarioGoogle'));
+  let usuarioIniciadoGoogle = localStorage.getItem('usuarioGoogle');
   if (usuarioIniciadoGoogle != null) {
     USER_LOCAL.innerHTML += `${capitalize(usuarioIniciadoGoogle[0].usuario)}`
     USER_LOCAL_LIST_ITEM.innerHTML += `<div class="dropdown-menu dropdown-menu-right dropdown-menu-md-left" aria-labelledby="dropdownMenuLink">
