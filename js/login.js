@@ -25,15 +25,16 @@ formularioInicioSesion.addEventListener('submit', function (event) {
  */
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
-    let usuarioIniciadoGoogle = profile.getName();
-    localStorage.setItem('usuarioGoogle', usuarioIniciadoGoogle);
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    localStorage.setItem('usuarioGoogle', profile.getName());
     window.location.href = "home.html";
 }
 
 /* No utilizo el DOMContentLoaded ya que tengo el script ejecutando al final de la página y son todos eventos externos. 
 document.addEventListener("DOMContentLoaded", function (e) {});
 */
+
+// Parte de la función onSignIn de google
+// console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+// console.log('Name: ' + profile.getName());
+// console.log('Image URL: ' + profile.getImageUrl());
+// console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
