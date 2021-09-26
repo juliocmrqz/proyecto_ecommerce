@@ -8,6 +8,8 @@ const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/987.json";
 const CART_BUY_URL = "https://japdevdep.github.io/ecommerce-api/cart/buy.json";
 const NAVBAR_ALL = document.getElementById("navbar-all");
 
+
+
 var showSpinner = function () {
   document.getElementById("spinner-wrapper").style.display = "block";
 }
@@ -45,44 +47,29 @@ var getJSONData = function (url) {
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 function navigationBarAllPages() {
+  NAVBAR_ALL.setAttribute('class', 'sticky-top')
   NAVBAR_ALL.innerHTML = `
-<div id="userlocal" class="container d-flex flex-column flex-md-row">
-      <!-- Boton cuando está reducido el navegador oculte todos los campos del navbar -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
-        aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <!-- Contenedor de los datos de la barra de navegación -->
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="home.html">
-              Inicio
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="categories.html">
-              Categorías
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="products.html">
-              Productos
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="sell.html">
-              Vender
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="cart.html">
-              Mi carrito
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>`
+  <div class="hamburger">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="home.html">Inicio</a></li>
+    <li><a href="categories.html">Categorías</a></li>
+    <li><a href="products.html">Productos</a></li>
+    <li><a href="sell.html">Vender</a></li>
+    <li><a href="cart.html">Mi carrito</a></li>
+    <li><a id="nombreusuario" class="cerrarsesion" href="my-profile.html" onclick="signOut();"><span id="userlocal"></span></a></li>
+  </ul>`
+}
+
+function hamburgerNavigationBar() {
+  const HAMBURGER = document.querySelector('.hamburger');
+  const NAV_LINKS = document.querySelector('.nav-links');
+  HAMBURGER.addEventListener('click', function (e) {
+    NAV_LINKS.classList.toggle('open');
+  })
 }
 
 // Función de cierre de sesión sea con Google o normalmente para redirigir al Login page
@@ -116,19 +103,14 @@ function loginUserAllPages() {
   // agrego la excepción si no existe nada me libere el boton Login
   let usuarioInicioSesion = JSON.parse(localStorage.getItem('usuario'));
   if (usuarioInicioSesion != null) {
-    USER_LOCAL.innerHTML += `
-      <a id="nombreUsuario" class="navbar-brand mr-0 p-md-1 cerrarsesion" href="#" onclick="signOut();">
-      ${capitalize(usuarioInicioSesion[0].usuario)}
-      </a>`
+    USER_LOCAL.innerHTML += `${capitalize(usuarioInicioSesion[0].usuario)}`
   } else { // Poder redirigir al home si el usuario no está loggeado por defecto.
-    USER_LOCAL.innerHTML += `
-      <a class="navbar-brand mr-0 p-md-1" href="index.html" onclick="signOut();">
-      Login
-            </a>`
+    USER_LOCAL.innerHTML += `Login`
   }
 }
 
 document.addEventListener("DOMContentLoaded", function (e) {
   navigationBarAllPages();
   loginUserAllPages();
+  hamburgerNavigationBar();
 });

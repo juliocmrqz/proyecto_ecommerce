@@ -1,3 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Raleway', serif !important;
+}
+
 .jumbotron,
 .card-body,
 .container,
@@ -144,6 +154,7 @@ a.custom-card:hover {
   color: inherit;
   text-decoration: inherit;
 }
+
 /* MARCA DEL VALOR DE LAS ESTRELLAS EN LOS COMENTARIOS */
 .checked {
   color: #05e690;
@@ -170,7 +181,84 @@ input:not(:checked)~label:hover~label {
   color: #05e690;
 }
 
-input:checked ~ label{
+input:checked~label {
   color: #05e690;
 }
+
 /* FIN DE LAS ESTRELLAS DEL FORMULARIO */
+
+/* CONTENEDOR DE LA INFORMACIÓN DEL PRODUCTO */
+#product-info-container {
+  border: 1px solid rgba(0, 0, 0, .125);
+  border-radius: .25rem;
+  padding: 15px;
+}
+
+/* ====================================== */
+
+/* NAVIGATION BAR NUEVA */
+
+nav {
+  height: 8vh;
+  background: rgb(41, 41, 41);
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  width: 100%;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+  margin-right: auto;
+}
+
+.nav-links li a {
+  color: whitesmoke;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  .line {
+    width: 30px;
+    height: 3px;
+    background: whitesmoke;
+    margin: 5px;
+  }
+
+  nav {
+    position: sticky;
+    z-index: 2;
+  }
+
+  .hamburger {
+    position: absolute;
+    cursor: pointer;
+    left: 5%;
+    top: 50%;
+    transform: translate(-5%, -50%);
+    z-index: 2;
+  }
+
+  .nav-links {
+    position: fixed;
+    background: rgb(41, 41, 41);
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    clip-path: circle(10px at 10% -5%);
+    -webkit-clip-path: circle(10px at 10% -5%);
+    transition: all 0.5s ease-out;
+    pointer-events: none;
+  }
+
+  .nav-links.open {
+    clip-path: circle(10000px at 90% -10%);
+    -webkit-clip-path: circle(10000px at 90% -10%);
+    transition: all 1s ease-out;
+    pointer-events: all;
+  }
+}
+
+/* ====================================== */

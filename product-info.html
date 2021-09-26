@@ -26,8 +26,7 @@
 
 <body>
   <!-- Barra de navegación actualizada por DOM -->
-  <nav id="navbar-all" class="navbar navbar-expand-md navbar-dark sticky-top bg-dark justify-content-center">
-  </nav>
+  <nav id="navbar-all"></nav>
   <!-- =========================================================================================== -->
 
   <div class="container">
@@ -57,9 +56,10 @@
     </div>
     <!-- =========================================================================================== -->
 
+
     <!-- Contenedor de formulario para comentarios y puntuaciones -->
     <div class="form-group mt-3">
-      <form class="row" id="formulario-comentarios">
+      <form class="" id="formulario-comentarios">
         <label class="font-weight-bold" for="formulario-comentarios">Agregar comentarios y puntuaciones</label>
         <div class="stars-container col-12">
           <input type="radio" name="rating" value="5" id="5"><label for="5"><i class="fas fa-star"></i></label>
@@ -67,6 +67,8 @@
           <input type="radio" name="rating" value="3" id="3"><label for="3"><i class="fas fa-star"></i></label>
           <input type="radio" name="rating" value="2" id="2"><label for="2"><i class="fas fa-star"></i></label>
           <input type="radio" name="rating" value="1" id="1"><label for="1"><i class="fas fa-star"></i></label>
+          <input type="radio" name="rating" value="0" id="0" checked><label style="display: none;" for="1"><i
+              class="fas fa-star"></i></label>
         </div>
         <textarea name="comentarios-puntuaciones" id="comentarios" class="form-control"
           placeholder="Comentarios"></textarea>
@@ -82,6 +84,9 @@
     <div id="comentarios-container"></div>
     <!-- =========================================================================================== -->
 
+    <!-- Contenedor de productos relacionados -->
+    <div id="related-products-container" class="row"></div>
+    <!-- =========================================================================================== -->
 
     <!-- Footer de JaP -->
     <footer class="text-muted">

@@ -11,18 +11,20 @@ const PRODUCT_INFO_PRICE = document.getElementById("product-info-price");
 const PRODUCT_INFO_SOLDCOUNT = document.getElementById("product-info-soldcount");
 const PRODUCT_INFO_DESCRIPTION = document.getElementById("product-info-description");
 const FORMULARIO_COMENTARIOS = document.getElementById("formulario-comentarios");
+const RELATED_PRODUCTS_CONTAINER = document.getElementById("related-products-container");
 // Creo las listas necesarias para poder anexar tanto la lista de datos que me devuelve para la información del producto
 // como los datos necesarios para mostrar los comentarios que se van agregando a la página
-let currentProduct = [];
+let currentProductInformation = [];
 let comentariosLista = [];
+let relatedProductsList = [];
 
 // Función para mostrar la información de todo el producto
-function ShowProductInfo(productInfo) {
+function showProductInformation(productInfo) {
   if (productInfo != undefined) {
-    currentProduct = productInfo
+    currentProductInformation = productInfo
   }
   // Como extra tomo el nombre del producto y lo anexo al title del documento en HTML
-  document.title = `eMercado - ${currentProduct.name}`;
+  document.title = `eMercado - ${currentProductInformation.name}`;
 
   // contenedor de la información del producto
   PRODUCT_INFO_CONTAINER.setAttribute("class", "small-container");
@@ -31,29 +33,30 @@ function ShowProductInfo(productInfo) {
   PRODUCT_INFO_DISPLAY.setAttribute("class", "col-md-6")
   IMAGE_CONTAINER.setAttribute("class", "text-center col-md-6");
   PRODUCT_NAME.setAttribute("class", "font-weight-bold w-100");
-  PRODUCT_NAME.innerHTML = currentProduct.name;
+  PRODUCT_NAME.innerHTML = currentProductInformation.name;
   // Categoría del producto
   PRODUCT_CATEGORY.setAttribute("class", "text-muted");
   PRODUCTS_INFO_URL.href = "products.html";
-  PRODUCTS_INFO_URL.innerHTML = currentProduct.category;
+  PRODUCTS_INFO_URL.innerHTML = currentProductInformation.category;
   PRODUCT_CATEGORY.appendChild(PRODUCTS_INFO_URL);
   // Precio del producto
   PRODUCT_INFO_PRICE.setAttribute("class", "w-100");
-  PRODUCT_INFO_PRICE.innerHTML = `${currentProduct.currency} ${currentProduct.cost}`;
+  PRODUCT_INFO_PRICE.innerHTML = `${currentProductInformation.currency} ${currentProductInformation.cost}`;
   // Cantidad de productos vendidos
   PRODUCT_INFO_SOLDCOUNT.setAttribute("class", "text-muted");
-  PRODUCT_INFO_SOLDCOUNT.innerHTML = `${currentProduct.soldCount} artículos vendidos`;
+  PRODUCT_INFO_SOLDCOUNT.innerHTML = `${currentProductInformation.soldCount} artículos vendidos`;
   // Descripción del producto
-  PRODUCT_INFO_DESCRIPTION.innerHTML = `${currentProduct.description}`;
+  PRODUCT_INFO_DESCRIPTION.innerHTML = `${currentProductInformation.description}`;
   PRODUCT_INFO_DESCRIPTION.style.textAlign = "justify";
-  // Contenedor de las imagenes del producto
-  // Traigo una colección de elementos con la clase carousel-item para poder ir agregandole la clase active y que se muestre en el carousel
-  // Como me traigo una colección de elementos con ese nombre, debo posicionarme en el inicial
-  //inserto los controles para el cambio de imagen
+  /* Contenedor de las imagenes del producto
+  Traigo una colección de elementos con la clase carousel-item para poder ir agregandole la clase active y que se muestre en el carousel
+  Como me traigo una colección de elementos con ese nombre, debo posicionarme en el inicial
+  inserto los controles para el cambio de imagen
+  */
   IMAGE_CONTAINER.innerHTML = `<div id="product-images-carousel" class="carousel slide" data-ride="carousel"><div class="carousel-inner"></div></div>`
   let carouselContainer = document.getElementsByClassName("carousel-inner")[0]
-  for (let i = 0; i < currentProduct.images.length; i++) {
-    const listaDeImagenes = currentProduct.images[i];
+  for (let i = 0; i < currentProductInformation.images.length; i++) {
+    const listaDeImagenes = currentProductInformation.images[i];
     carouselContainer.innerHTML += `<div class="carousel-item"><img src="${listaDeImagenes}" class="d-block w-100" alt="Imagen del producto"></div>`
   }
   let imagesInCarousel = document.getElementsByClassName("carousel-item")
@@ -65,11 +68,31 @@ function ShowProductInfo(productInfo) {
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>`
+}
 
-  /*
-  { me falta por mostrar los siguientes datos en la página del JSON de info producto
-    "relatedProducts": [1, 3]
-   */
+/**
+ * Toma un listado de productos obtenidos del JSON
+ * Setea el listado en una variable global
+ * Recorre el listado de productos relacionados del objeto información de producto actual
+ * Mapea los datos de la lista de productos considerando el indice que se le pasa de productos relacionados
+ * Inserta en el contenedor de productos relacionados las card con los datos de los productos relacionados
+ */
+function showRelatedProductsInformation(relatedProductsListInfo) {
+  relatedProductsList = relatedProductsListInfo;
+  for (let i = 0; i < currentProductInformation.relatedProducts.length; i++) {
+    let relatedProductToShow = relatedProductsList[currentProductInformation.relatedProducts[i]]
+
+    RELATED_PRODUCTS_CONTAINER.innerHTML += `
+    <div class="card m-2 col-md-3">
+      <img src="${relatedProductToShow.imgSrc}" class="card-img-top mt-2" alt="...">
+      <div class="card-body">
+        <h6 class="card-title font-weight-bold">${relatedProductToShow.name}</h6>
+        <p class="card-text">${relatedProductToShow.currency} ${relatedProductToShow.cost}</p>
+        <a href="#" class="btn btn-primary">Ver producto</a>
+      </div>
+    </div>`
+
+  }
 }
 
 /**
@@ -107,7 +130,7 @@ function sortComentariosByDate(listaDeComentarios) {
   listaDeComentarios.sort(function (a, b) {
     var dateA = new Date(a.dateTime).getTime();
     var dateB = new Date(b.dateTime).getTime();
-    return dateA < dateB ? 1 : -1; // Investigar qué hace estructurar de esta forma!!!!!!!!!!
+    return dateA < dateB ? 1 : -1;
   });
   return listaDeComentarios;
 }
@@ -141,15 +164,22 @@ function comentariosJSON() {
 
 
 document.addEventListener("DOMContentLoaded", function (e) {
-  getJSONData(PRODUCT_INFO_URL).then(function (resultObj) {
-    if (resultObj.status === "ok") {
-      ShowProductInfo(resultObj.data);
+  getJSONData(PRODUCT_INFO_URL).then(function (productoInformationResult) {
+    if (productoInformationResult.status === "ok") {
+      showProductInformation(productoInformationResult.data);
+
     }
   });
 
-  getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
-    if (resultObj.status === "ok") {
-      comentariosLista = resultObj.data;
+  getJSONData(PRODUCTS_URL).then(function (productsResult) {
+    if (productsResult.status === "ok") {
+      showRelatedProductsInformation(productsResult.data);
+    }
+  });
+
+  getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (infoCommentsResult) {
+    if (infoCommentsResult.status === "ok") {
+      comentariosLista = infoCommentsResult.data;
       comentariosJSON();
       newCommentToAppendToCommentsObject();
     }
