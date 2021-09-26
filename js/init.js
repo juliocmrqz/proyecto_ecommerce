@@ -94,15 +94,17 @@ function onLoad() {
   });
 }
 
+function capitalize(word) {
+  const lower = word.toLowerCase();
+  return word.charAt(0).toUpperCase() + lower.slice(1);
+}
+
 function loginUserAllPages() {
   // obtengo el div donde voy a agregar los datos y funcionalidades
   const USER_LOCAL = document.getElementById("userlocal");
   const USER_LOCAL_LIST_ITEM = document.getElementById("userlocal-list-item");
   // función para capitalizar una palabra
-  function capitalize(word) {
-    const lower = word.toLowerCase();
-    return word.charAt(0).toUpperCase() + lower.slice(1);
-  }
+
 
   // Usuario iniciando sesión con Google
   let usuarioIniciadoGoogle = localStorage.getItem('usuarioGoogle');
