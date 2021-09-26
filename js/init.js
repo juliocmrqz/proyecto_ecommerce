@@ -86,6 +86,7 @@ function signOut() {
   })
   location.href = "index.html";
   localStorage.removeItem('usuario');
+  localStorage.removeItem('usuarioGoogle');
 }
 
 function onLoad() {
