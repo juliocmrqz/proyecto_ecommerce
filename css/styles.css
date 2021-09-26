@@ -247,18 +247,33 @@ nav {
     height: 100vh;
     width: 100%;
     flex-direction: column;
-    clip-path: circle(10px at 10% -5%);
-    -webkit-clip-path: circle(10px at 10% -5%);
-    transition: all 0.5s ease-out;
+    clip-path: circle(10px at 0% -5%);
+    -webkit-clip-path: circle(10px at 0% -5%);
+    transition: all 1s ease-out;
     pointer-events: none;
   }
 
   .nav-links.open {
-    clip-path: circle(10000px at 90% -10%);
-    -webkit-clip-path: circle(10000px at 90% -10%);
+    clip-path: circle(1000px at 0% -10%);
+    -webkit-clip-path: circle(1000px at 0% -10%);
     transition: all 1s ease-out;
     pointer-events: all;
   }
 }
 
+/* ====================================== */
+
+/* DROPDOWNMENU */
+.dropdown #dropdownMenuLink{
+  background-color: rgb(41, 41, 41);
+  border-color: rgb(41, 41, 41);
+}
+
+.dropdown .dropdown-item{
+  color: rgb(65, 65, 65);
+}
+
+.dropdown .dropdown-item:hover{
+  color: black;
+}
 /* ====================================== */

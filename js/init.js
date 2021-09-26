@@ -60,7 +60,13 @@ function navigationBarAllPages() {
     <li><a href="products.html">Productos</a></li>
     <li><a href="sell.html">Vender</a></li>
     <li><a href="cart.html">Mi carrito</a></li>
-    <li><a id="nombreusuario" class="cerrarsesion" href="my-profile.html" onclick="signOut();"><span id="userlocal"></span></a></li>
+    <li>
+      <div class="dropdown">
+        <a id="dropdownMenuLink" class="btn btn-secondary dropdown-toggle cerrarsesion" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span id="userlocal"></span>
+        </a>
+        <span id="userlocal-list-item"></span>
+    </li>
   </ul>`
 }
 
@@ -91,7 +97,7 @@ function onLoad() {
 function loginUserAllPages() {
   // obtengo el div donde voy a agregar los datos y funcionalidades
   const USER_LOCAL = document.getElementById("userlocal");
-
+  const USER_LOCAL_LIST_ITEM = document.getElementById("userlocal-list-item");
   // función para capitalizar una palabra
   function capitalize(word) {
     const lower = word.toLowerCase();
@@ -104,8 +110,18 @@ function loginUserAllPages() {
   let usuarioInicioSesion = JSON.parse(localStorage.getItem('usuario'));
   if (usuarioInicioSesion != null) {
     USER_LOCAL.innerHTML += `${capitalize(usuarioInicioSesion[0].usuario)}`
+    USER_LOCAL_LIST_ITEM.innerHTML += `<div class="dropdown-menu dropdown-menu-right dropdown-menu-md-left" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
+    <a class="dropdown-item" href="cart.html">Mi Carrito</a>
+    <a class="dropdown-item" href="#" onclick="signOut();">Cerrar Sesión</a>
+  </div>
+  </div>`
   } else { // Poder redirigir al home si el usuario no está loggeado por defecto.
     USER_LOCAL.innerHTML += `Login`
+    USER_LOCAL_LIST_ITEM.innerHTML += `<div class="dropdown-menu dropdown-menu-right dropdown-menu-md-left" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="#" onclick="signOut();">Iniciar Sesión</a>
+  </div>
+  </div>`
   }
 }
 
