@@ -104,6 +104,23 @@ function loginUserAllPages() {
     return word.charAt(0).toUpperCase() + lower.slice(1);
   }
 
+  // Usuario iniciando sesión con Google
+  let usuarioIniciadoGoogle = JSON.parse(localStorage.getItem('usuarioGoogle'));
+  if (usuarioIniciadoGoogle != null) {
+    USER_LOCAL.innerHTML += `${capitalize(usuarioIniciadoGoogle[0].usuario)}`
+    USER_LOCAL_LIST_ITEM.innerHTML += `<div class="dropdown-menu dropdown-menu-right dropdown-menu-md-left" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
+    <a class="dropdown-item" href="cart.html">Mi Carrito</a>
+    <a class="dropdown-item" href="#" onclick="signOut();">Cerrar Sesión</a>
+  </div>
+  </div>`
+  } else { // Poder redirigir al home si el usuario no está loggeado por defecto.
+    USER_LOCAL.innerHTML += `Login`
+    USER_LOCAL_LIST_ITEM.innerHTML += `<div class="dropdown-menu dropdown-menu-right dropdown-menu-md-left" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="#" onclick="signOut();">Iniciar Sesión</a>
+  </div>
+  </div>`
+  }
   // Tomo los datos que instancié en usuario dentro de login.js
   // Considero de no ser null el usuarioInicioSesion insertar el elemento solo considerando el usuario con sus funcionalidades
   // agrego la excepción si no existe nada me libere el boton Login
