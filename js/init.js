@@ -59,7 +59,6 @@ function navigationBarAllPages() {
     <li><a href="categories.html">Categorías</a></li>
     <li><a href="products.html">Productos</a></li>
     <li><a href="sell.html">Vender</a></li>
-    <li><a href="cart.html">Mi carrito</a></li>
     <li>
       <div class="dropdown">
         <a id="dropdownMenuLink" class="btn btn-secondary dropdown-toggle cerrarsesion" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
