@@ -107,6 +107,7 @@ function newCommentToAppendToCommentsObject() {
   FORMULARIO_COMENTARIOS.addEventListener("submit", function (e) {
     e.preventDefault();
     let date = new Date();
+    let usuarioIniciadoGoogle = localStorage.getItem('usuarioGoogle');
     if (usuarioIniciadoGoogle != null) {
       let newcomment = {
         score: parseInt(document.querySelector('input[type="radio"]:checked').value),
