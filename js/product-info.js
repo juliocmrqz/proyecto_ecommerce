@@ -107,40 +107,15 @@ function newCommentToAppendToCommentsObject() {
   FORMULARIO_COMENTARIOS.addEventListener("submit", function (e) {
     e.preventDefault();
     let date = new Date();
-    let usuarioIniciadoGoogle = localStorage.getItem('usuarioGoogle');
-    let usuarioInicioSesion = JSON.parse(localStorage.getItem('usuario'))[0].usuario;
-    if (usuarioIniciadoGoogle != null) {
-      let newcomment = {
-        score: parseInt(document.querySelector('input[type="radio"]:checked').value),
-        description: document.getElementById("comentarios").value,
-        user: localStorage.getItem('usuarioGoogle'),
-        dateTime: `${date.getFullYear()}-${(date.getMonth()+1 < 10) ? "0" : ""}${date.getMonth()}-${date.getDate() < 10 ? "0" : ""}${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-      };
-      COMENTARIOS.innerHTML = '';
-      comentariosLista.push(newcomment);
-      comentariosJSON();
-    }
-    if (usuarioInicioSesion != null) {
-      let newcomment = {
-        score: parseInt(document.querySelector('input[type="radio"]:checked').value),
-        description: document.getElementById("comentarios").value,
-        user: usuarioInicioSesion,
-        dateTime: `${date.getFullYear()}-${(date.getMonth()+1 < 10) ? "0" : ""}${date.getMonth()}-${date.getDate() < 10 ? "0" : ""}${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-      };
-      COMENTARIOS.innerHTML = '';
-      comentariosLista.push(newcomment);
-      comentariosJSON();
-    } else {
-      let newcomment = {
-        score: parseInt(document.querySelector('input[type="radio"]:checked').value),
-        description: document.getElementById("comentarios").value,
-        user: "Invitado",
-        dateTime: `${date.getFullYear()}-${(date.getMonth()+1 < 10) ? "0" : ""}${date.getMonth()}-${date.getDate() < 10 ? "0" : ""}${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-      };
-      COMENTARIOS.innerHTML = '';
-      comentariosLista.push(newcomment);
-      comentariosJSON();
-    }
+    let newcomment = {
+      score: parseInt(document.querySelector('input[type="radio"]:checked').value),
+      description: document.getElementById("comentarios").value,
+      user: JSON.parse(localStorage.getItem('usuario'))[0].usuario,
+      dateTime: `${date.getFullYear()}-${(date.getMonth()+1 < 10) ? "0" : ""}${date.getMonth()}-${date.getDate() < 10 ? "0" : ""}${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+    };
+    COMENTARIOS.innerHTML = '';
+    comentariosLista.push(newcomment);
+    comentariosJSON();
   })
 }
 
