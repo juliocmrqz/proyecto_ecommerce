@@ -147,6 +147,16 @@ function loginUserAllPages() {
   }
 }
 
+// function getUser() {
+//   let nombre = localStorage.getItem("user");
+//   if (nombre != undefined && nombre != "") {
+//       document.getElementById("nombreUsuario").innerHTML += " " + nombre;
+//   } else {
+//       window.location.href = "login.html"
+//   }
+// }
+
+
 document.addEventListener("DOMContentLoaded", function (e) {
   navigationBarAllPages();
   loginUserAllPages();

@@ -162,16 +162,15 @@ function comentariosJSON() {
 
 
 document.addEventListener("DOMContentLoaded", function (e) {
+  // Anido el fetch de la lista de productos dentro del fetch de info de producto.
   getJSONData(PRODUCT_INFO_URL).then(function (productoInformationResult) {
     if (productoInformationResult.status === "ok") {
       showProductInformation(productoInformationResult.data);
-
-    }
-  });
-
-  getJSONData(PRODUCTS_URL).then(function (productsResult) {
-    if (productsResult.status === "ok") {
-      showRelatedProductsInformation(productsResult.data);
+      getJSONData(PRODUCTS_URL).then(function (productsResult) {
+        if (productsResult.status === "ok") {
+          showRelatedProductsInformation(productsResult.data);
+        }
+      });
     }
   });
 
