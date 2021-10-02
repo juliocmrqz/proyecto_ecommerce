@@ -223,8 +223,6 @@ nav {
 }
 
 @media screen and (max-width: 768px) {
-
-  .fas,
   .fa-bars {
     color: whitesmoke;
   }
