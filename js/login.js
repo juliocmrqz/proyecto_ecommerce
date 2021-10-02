@@ -3,19 +3,46 @@
  * No utilizo preventDefault en el eventListener ya que me evita la ejecución del action del formulario
  * No tengo que utilizar location.href porque tengo un action al submit
  */
-const formularioInicioSesion = document.getElementById("formularioInicioSesion");
-const usuarioInicioSesion = document.getElementById("usuarioInicioSesion");
-const passwordInicioSesion = document.getElementById("passwordInicioSesion");
+// const formularioInicioSesion = document.getElementById("formularioInicioSesion");
+// const usuarioInicioSesion = document.getElementById("usuarioInicioSesion");
+// const passwordInicioSesion = document.getElementById("passwordInicioSesion");
 
-formularioInicioSesion.addEventListener('submit', function (event) {
-    let usuariosIniciados = Array({
-        usuario: usuarioInicioSesion.value,
-        /* No es necesario almacenar la contraseña por ahora porque no estoy validando contra 
-        base de dato alguna */
-        // password: passwordInicioSesion.value,
-    })
-    localStorage.setItem('usuario', JSON.stringify(usuariosIniciados));
-});
+
+// formularioInicioSesion.addEventListener('submit', function (event) {
+//     let usuariosIniciados = Array({
+//         usuario: usuarioInicioSesion.value,
+//         /* No es necesario almacenar la contraseña por ahora porque no estoy validando contra 
+//         base de dato alguna */
+//         // password: passwordInicioSesion.value,
+//     })
+//     localStorage.setItem('usuario', JSON.stringify(usuariosIniciados));
+// });
+
+
+/**
+ * TO DO
+ * agregar el usuario de google a una variable global que considere:
+ * Si está iniciado con el login, ese usuario
+ * Si está iniciado con google, ese usuario
+ */
+
+/**
+ * 
+ */
+const formularioInicioSesion = document.getElementById("formularioInicioSesion");
+            const usuarioInicioSesion = document.getElementById("usuarioInicioSesion");
+            const passwordInicioSesion = document.getElementById("passwordInicioSesion");
+
+            function redirectToHomeIfValidated() {
+              if (usuarioInicioSesion.value === "" || passwordInicioSesion.value === "") {} else {
+                window.location.href = "home.html"
+                let usuariosIniciados = Array({
+                  usuario: usuarioInicioSesion.value
+                })
+                localStorage.setItem('usuario', JSON.stringify(usuariosIniciados));
+              }
+            }
+
 
 /**
  * USO FUNCION DE GOOGLE PARA INICIO DE SESIÓN

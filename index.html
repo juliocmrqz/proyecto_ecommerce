@@ -34,7 +34,7 @@
   <div class="limiter">
     <div class="container-login100">
       <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-        <form id="formularioInicioSesion" action="home.html" class="login100-form validate-form">
+        <form id="formularioInicioSesion" class="login100-form validate-form" method="POST"> 
           <label class="login100-form-title p-b-49">Login</label>
           <div class="wrap-input100 validate-input m-b-23" data-validate="Usuario requerido">
             <label class="label-input100">Usuario</label>
@@ -54,7 +54,7 @@
           <div class="container-login100-form-btn">
             <div class="wrap-login100-form-btn">
               <div class="login100-form-bgbtn"></div>
-              <button type="submit" class="login100-form-btn">Entrar</button>
+              <button type="button" onclick="redirectToHomeIfValidated()" class="login100-form-btn">Entrar</button>
             </div>
           </div>
           <div class="txt1 text-center p-t-54 p-b-20">

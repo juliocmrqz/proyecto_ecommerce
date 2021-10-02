@@ -17,7 +17,9 @@ Trae un listado de elementos con la clase especificada y a cada uno le aplica un
     /*==================================================================
     [ Validate ]*/
     var input = $('.validate-input .input100'); //Lista de elementos que tienen las clases seleccionadas.
-    $('.validate-form').on('submit', function () {
+    // Cambio el evento de tipo submit para generar los letreros de alerta falta de usuario o contraseña.
+    // antes estaba apuntando al formulario por el evento submit, ahora apunta al elemento boton.
+    $('.login100-form-btn').on('click', function () {
         // Chequea que al hacer submit al form cumpla con no estar vacío, recorriendo la lista de elementos donde se ingresan los datos
         var check = true;
         for (var i = 0; i < input.length; i++) {
