@@ -50,9 +50,7 @@ function navigationBarAllPages() {
   NAVBAR_ALL.setAttribute('class', 'sticky-top')
   NAVBAR_ALL.innerHTML = `
   <div class="hamburger">
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
+    <i class="fas fa-bars fa-2x"></i>
   </div>
   <ul class="nav-links">
     <li><a href="home.html">Inicio</a></li>
@@ -103,47 +101,25 @@ function loginUserAllPages() {
   // obtengo el div donde voy a agregar los datos y funcionalidades
   const USER_LOCAL = document.getElementById("userlocal");
   const USER_LOCAL_LIST_ITEM = document.getElementById("userlocal-list-item");
-  // función para capitalizar una palabra
 
-
-  // Usuario iniciando sesión con Google
-  let usuarioIniciadoGoogle = localStorage.getItem('usuarioGoogle');
-  if (usuarioIniciadoGoogle) {
-    if (usuarioIniciadoGoogle != null) {
-      USER_LOCAL.innerHTML += `${capitalize(usuarioIniciadoGoogle)}`
-      USER_LOCAL_LIST_ITEM.innerHTML += `<div class="dropdown-menu dropdown-menu-right dropdown-menu-md-left" aria-labelledby="dropdownMenuLink">
-    <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
-    <a class="dropdown-item" href="cart.html">Mi Carrito</a>
-    <a class="dropdown-item" href="#" onclick="signOut();">Cerrar Sesión</a>
+  // Tomo los datos que instancié en usuario dentro de login.js
+  // Considero de no ser null el usuarioInicioSesion insertar el elemento solo considerando el usuario con sus funcionalidades
+  // agrego la excepción si no existe nada me libere el boton Login
+  let usuarioInicioSesion = JSON.parse(localStorage.getItem('usuario'));
+  if (usuarioInicioSesion != null) {
+    USER_LOCAL.innerHTML += `${capitalize(usuarioInicioSesion[0].usuario)}`
+    USER_LOCAL_LIST_ITEM.innerHTML += `<div id="dropdownMenuContainer" class="dropdown-menu dropdown-menu-right dropdown-menu-md-left" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="my-profile.html"><i class="far fa-user"></i> Mi perfil</a>
+    <a class="dropdown-item" href="cart.html"><i class="fas fa-cart-arrow-down"></i> Mi Carrito</a>
+    <a class="dropdown-item" href="#" onclick="signOut();"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
   </div>
   </div>`
-    } else { // Poder redirigir al home si el usuario no está loggeado por defecto.
-      USER_LOCAL.innerHTML += `Login`
-      USER_LOCAL_LIST_ITEM.innerHTML += `<div class="dropdown-menu dropdown-menu-right dropdown-menu-md-left" aria-labelledby="dropdownMenuLink">
+  } else { // Poder redirigir al home si el usuario no está loggeado por defecto.
+    USER_LOCAL.innerHTML += `Login`
+    USER_LOCAL_LIST_ITEM.innerHTML += `<div id="dropdownMenuContainer" class="dropdown-menu dropdown-menu-right dropdown-menu-md-left" aria-labelledby="dropdownMenuLink">
     <a class="dropdown-item" href="#" onclick="signOut();">Iniciar Sesión</a>
   </div>
   </div>`
-    }
-  } else {
-    // Tomo los datos que instancié en usuario dentro de login.js
-    // Considero de no ser null el usuarioInicioSesion insertar el elemento solo considerando el usuario con sus funcionalidades
-    // agrego la excepción si no existe nada me libere el boton Login
-    let usuarioInicioSesion = JSON.parse(localStorage.getItem('usuario'));
-    if (usuarioInicioSesion != null) {
-      USER_LOCAL.innerHTML += `${capitalize(usuarioInicioSesion[0].usuario)}`
-      USER_LOCAL_LIST_ITEM.innerHTML += `<div class="dropdown-menu dropdown-menu-right dropdown-menu-md-left" aria-labelledby="dropdownMenuLink">
-    <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
-    <a class="dropdown-item" href="cart.html">Mi Carrito</a>
-    <a class="dropdown-item" href="#" onclick="signOut();">Cerrar Sesión</a>
-  </div>
-  </div>`
-    } else { // Poder redirigir al home si el usuario no está loggeado por defecto.
-      USER_LOCAL.innerHTML += `Login`
-      USER_LOCAL_LIST_ITEM.innerHTML += `<div class="dropdown-menu dropdown-menu-right dropdown-menu-md-left" aria-labelledby="dropdownMenuLink">
-    <a class="dropdown-item" href="#" onclick="signOut();">Iniciar Sesión</a>
-  </div>
-  </div>`
-    }
   }
 }
 

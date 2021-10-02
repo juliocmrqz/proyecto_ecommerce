@@ -197,9 +197,8 @@ input:checked~label {
 /* ====================================== */
 
 /* NAVIGATION BAR NUEVA */
-
 nav {
-  height: 8vh;
+  height: auto;
   background: rgb(41, 41, 41);
 }
 
@@ -219,20 +218,25 @@ nav {
   font-size: 16px;
 }
 
+.hamburger {
+  display: none;
+}
+
 @media screen and (max-width: 768px) {
-  .line {
-    width: 30px;
-    height: 3px;
-    background: whitesmoke;
-    margin: 5px;
+
+  .fas,
+  .fa-bars {
+    color: whitesmoke;
   }
 
   nav {
     position: sticky;
     z-index: 2;
+    height: 8vh;
   }
 
   .hamburger {
+    display: block;
     position: absolute;
     cursor: pointer;
     left: 5%;
@@ -264,16 +268,20 @@ nav {
 /* ====================================== */
 
 /* DROPDOWNMENU */
-.dropdown #dropdownMenuLink{
+.dropdown #dropdownMenuLink {
   background-color: rgb(41, 41, 41);
   border-color: rgb(41, 41, 41);
 }
 
-.dropdown .dropdown-item{
+.dropdown .dropdown-item {
   color: rgb(65, 65, 65);
 }
 
-.dropdown .dropdown-item:hover{
+.dropdown .dropdown-item:hover {
   color: black;
+}
+
+#dropdownMenuContainer {
+  text-align: right;
 }
 /* ====================================== */

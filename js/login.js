@@ -30,18 +30,18 @@
  * 
  */
 const formularioInicioSesion = document.getElementById("formularioInicioSesion");
-            const usuarioInicioSesion = document.getElementById("usuarioInicioSesion");
-            const passwordInicioSesion = document.getElementById("passwordInicioSesion");
+const usuarioInicioSesion = document.getElementById("usuarioInicioSesion");
+const passwordInicioSesion = document.getElementById("passwordInicioSesion");
 
-            function redirectToHomeIfValidated() {
-              if (usuarioInicioSesion.value === "" || passwordInicioSesion.value === "") {} else {
-                window.location.href = "home.html"
-                let usuariosIniciados = Array({
-                  usuario: usuarioInicioSesion.value
-                })
-                localStorage.setItem('usuario', JSON.stringify(usuariosIniciados));
-              }
-            }
+function redirectToHomeIfValidated() {
+  if (usuarioInicioSesion.value === "" || passwordInicioSesion.value === "") {} else {
+    window.location.href = "home.html"
+    let usuariosIniciados = Array({
+      usuario: usuarioInicioSesion.value
+    })
+    localStorage.setItem('usuario', JSON.stringify(usuariosIniciados));
+  }
+}
 
 
 /**
@@ -51,9 +51,12 @@ const formularioInicioSesion = document.getElementById("formularioInicioSesion")
  * RECORDAR QUE SIEMPRE QUE QUIERA TRABAJAR EN SERVIDOR LOCAL ME VA A SALTAR ERROR DE OBTENCIÓN DE CREDENCIALES.
  */
 function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    localStorage.setItem('usuarioGoogle', profile.getName());
-    window.location.href = "home.html";
+  var profile = googleUser.getBasicProfile();
+  let usuariosIniciados = Array({
+    usuario: profile.getName()
+  })
+  localStorage.setItem('usuario', JSON.stringify(usuariosIniciados));
+  window.location.href = "home.html";
 }
 
 /* No utilizo el DOMContentLoaded ya que tengo el script ejecutando al final de la página y son todos eventos externos. 
