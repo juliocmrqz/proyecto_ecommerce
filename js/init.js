@@ -43,9 +43,11 @@ var getJSONData = function (url) {
     });
 }
 
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
+/**
+ * Función que se ejecuta una vez que se haya lanzado el evento de
+ * que el documento se encuentra cargado, es decir, se encuentran todos los
+ * elementos HTML presentes.
+ */
 function navigationBarAllPages() {
   NAVBAR_ALL.setAttribute('class', 'sticky-top')
   NAVBAR_ALL.innerHTML = `
@@ -67,6 +69,9 @@ function navigationBarAllPages() {
   </ul>`
 }
 
+/**
+ * Función para agregar la clase necesaria para que funcione el dropdown resposive cuando la pantalla reduce
+ */
 function hamburgerNavigationBar() {
   const HAMBURGER = document.querySelector('.hamburger');
   const NAV_LINKS = document.querySelector('.nav-links');
@@ -75,7 +80,9 @@ function hamburgerNavigationBar() {
   })
 }
 
-// Función de cierre de sesión sea con Google o normalmente para redirigir al Login page
+/**
+ * Función de cierre de sesión sea con Google o normalmente para redirigir al Login page 
+ */
 function signOut() {
   var auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function () {
@@ -86,17 +93,29 @@ function signOut() {
   localStorage.removeItem('usuarioGoogle');
 }
 
+/**
+ * Función complementaria a Google
+ */
 function onLoad() {
   gapi.load('auth2', function () {
     gapi.auth2.init();
   });
 }
 
+/**
+ * Función que toma la palabra completa, la vuelve minúsculas
+ * Luego toma el primer caracter y lo vuelve mayuscula y concatena con el resto de la palabra iniciando
+ * en el indice 1.
+ */
 function capitalize(word) {
   const lower = word.toLowerCase();
   return word.charAt(0).toUpperCase() + lower.slice(1);
 }
 
+/**
+ * Función que toma al usuario que esté guardado en el localstorage como usuario y lo muestra dentro
+ * de un boton en la barra de navegación.
+ */
 function loginUserAllPages() {
   // obtengo el div donde voy a agregar los datos y funcionalidades
   const USER_LOCAL = document.getElementById("userlocal");
@@ -122,16 +141,6 @@ function loginUserAllPages() {
   </div>`
   }
 }
-
-// function getUser() {
-//   let nombre = localStorage.getItem("user");
-//   if (nombre != undefined && nombre != "") {
-//       document.getElementById("nombreUsuario").innerHTML += " " + nombre;
-//   } else {
-//       window.location.href = "login.html"
-//   }
-// }
-
 
 document.addEventListener("DOMContentLoaded", function (e) {
   navigationBarAllPages();
