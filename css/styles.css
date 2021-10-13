@@ -176,12 +176,12 @@ a.custom-card:hover {
   display: none;
 }
 
-input:not(:checked)~label:hover,
-input:not(:checked)~label:hover~label {
+input:not(:checked)~label .fa-star:hover,
+input:not(:checked)~label:hover~label .fa-star {
   color: #05e690;
 }
 
-input:checked~label {
+input:checked~label .fa-star {
   color: #05e690;
 }
 
@@ -282,4 +282,124 @@ nav {
 #dropdownMenuContainer {
   text-align: right;
 }
+
+/* ====================================== */
+
+/* CART 2.0 HTML */
+.cart .table {
+  margin-bottom: 30px;
+}
+
+.d-flex {
+  justify-content: center;
+}
+
+.des {
+  text-align: center;
+}
+
+.cart .table thead tr th {
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 0px;
+}
+
+.cart .table thead tr td {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  vertical-align: middle;
+  align-self: center;
+}
+
+.cart .table tbody tr td .main .d-flex {
+  align-items: center;
+  margin: auto;
+}
+
+.cart .table tbody tr td .main .d-flex img {
+  border-radius: 3px;
+  width: 150px;
+}
+
+.cart .table tbody tr td .main .des {
+  vertical-align: middle;
+  align-self: center;
+}
+
+.cart .table tbody tr td .main .des p {
+  margin-bottom: 0px;
+}
+
+
+.cart .table tbody tr td {
+  vertical-align: middle;
+  align-items: center;
+}
+
+.cart .table tbody tr td h6 {
+  font-size: 16px;
+  color: #000;
+  margin-bottom: 0px;
+}
+
+.cart .table tbody tr td .counter {
+  margin-bottom: 0px;
+}
+
+.cart .table tbody tr td .counter input .form-control {
+  width: auto;
+}
+
+.form-control {
+  width: 100%;
+}
+
+.checkout ul {
+  border: 2px solid #ebebeb;
+  background: #f3f3f3;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 16px;
+  padding-bottom: 20px;
+}
+
+.checkout ul li {
+  list-style: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #252525;
+  overflow: hidden;
+}
+
+.checkout ul li.subtotal {
+  font-weight: bold;
+  padding-bottom: 14px;
+}
+
+.checkout ul li.subtotal span {
+  font-weight: bold;
+}
+
+.checkout ul li.cart-total {
+  padding-top: 10px
+}
+
+.checkout ul li.cart-total span {
+  color: #e7ab3c;
+}
+
+.checkout ul li span {
+  float: right;
+}
+
+.checkout .proceed-btn {
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  background: #252525;
+  padding: 15px 25px 14px 25px;
+  display: block;
+  text-align: center;
+}
+
 /* ====================================== */
