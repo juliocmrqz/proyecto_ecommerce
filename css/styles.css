@@ -380,10 +380,6 @@ nav {
   font-weight: bold;
 }
 
-.checkout ul li.cart-total {
-  padding-top: 10px
-}
-
 .checkout ul li.cart-total span {
   color: #e7ab3c;
 }

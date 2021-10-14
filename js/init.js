@@ -8,7 +8,7 @@ const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/654.json";
 const CART_BUY_URL = "https://japdevdep.github.io/ecommerce-api/cart/buy.json";
 const NAVBAR_ALL = document.getElementById("navbar-all");
 
-function numberWithCommas(x) {
+function addCommasToNumbersOverAThousand(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 

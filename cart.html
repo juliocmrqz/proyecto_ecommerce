@@ -32,15 +32,11 @@
     <nav id="navbar-all"></nav>
     <!-- =================================================================== -->
 
-    <!--Cart Section-->
+    <!-- Sección del carrito -->
     <section class="mt-3">
         <div class="container">
+            <h1 class="text-center">CARRITO DE COMPRA</h1>
             <div class="cart">
-                <small class="text-muted">
-                    Articulos en tu carrito:
-                    <!-- contenedor de la cantidad de articulos en el carrito -->
-                    <span id="cart-quantity"></span>
-                </small>
                 <div class="table table-responsive">
                     <table class="table">
                         <thead class="text-center" style="background-color: rgb(41, 41, 41);">
@@ -52,32 +48,84 @@
                                 <th scope="col" class="text-white"></th>
                             </tr>
                         </thead>
+                        <!-- Contenedor de los productos en carrito -->
                         <tbody id="cart-container"></tbody>
+                        <!-- =================================================================== -->
                     </table>
                 </div>
             </div>
         </div>
     </section>
-    <div class="col-lg-4 offset-lg-4 mb-4">
-        <div class="checkout">
-            <ul>
-                <li class="subtotal">Subtotal
-                    <span id="cart-subtotal"></span>
-                </li>
-                <li>Método de envio</li>
-                <li>
-                    <select class="form-control" name="moneda" id="moneda">
-                        <option value="">-- Seleccionar --</option>
-                        <option value="PREMIUM">Premium (2-5 días) - Costo 15% Subtotal</option>
-                        <option value="EXPRESS">Express (5-8 días) - Costo 7% Subtotal</option>
-                        <option value="STANDARD">Standard (12 a 15 días) - Costo 5% Subtotal</option>
-                    </select>
-                </li>
-                <li class="cart-total">Total
-                    <span></span>
-                </li>
-            </ul>
-            <a href="#" class="proceed-btn">Proceed to Checkout</a>
+    <!-- =================================================================== -->
+    <!-- Formulario de envío -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h3 class="mt-5">Datos de envío:</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="">Dirección:</label>
+                        <input type="text" class="form-control" id="" placeholder="Dirección del domicilio">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="">Ciudad:</label>
+                            <input type="text" class="form-control" id="" placeholder="Ciudad">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">País:</label>
+                            <input type="text" class="form-control" id="" placeholder="País">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="">Código postal</label>
+                            <input type="text" class="form-control" id="" placeholder="Zip code">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- =================================================================== -->
+
+            <!-- Resumen del carrito - método de envío -->
+            <div class="col-md-4 mb-4">
+                <div class="checkout">
+                    <ul>
+                        <h3 class="">Resumen de compra</h3>
+                        <small class="text-muted">
+                            Articulos en tu carrito:
+                            <!-- contenedor de la cantidad de articulos en el carrito -->
+                            <span id="cart-quantity"></span>
+                            <!-- =================================================================== -->
+                        </small>
+                        <li class="subtotal">Subtotal
+                            <span id="cart-subtotal"></span>
+                        </li>
+                        <li>Método de envio</li>
+                        <li>
+                            <select class="form-control" name="moneda" id="moneda"
+                                onchange="totalCostAfterShippingMethod()">
+                                <option value="">-- Seleccionar --</option>
+                                <option value="15">Premium (2-5 días)</option>
+                                <option value="7">Express (5-8 días)</option>
+                                <option value="5">Standard (12 a 15 días)</option>
+                            </select>
+                        </li>
+                        <li class="mt-2">
+                            Costo de envío:
+                            <span id="shipping-cost"></span>
+                        </li>
+                        <hr>
+                        <li class="cart-total">Total
+                            <span id="total-after-shipping"></span>
+                        </li>
+                        <li>
+                            <small class="text-muted">
+                                Todos los precios están expresados en pesos uruguayos
+                            </small>
+                        </li>
+                    </ul>
+                    <a href="#" class="proceed-btn">COMPRAR</a>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Spinner -->
