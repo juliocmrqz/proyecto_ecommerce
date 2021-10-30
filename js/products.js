@@ -68,26 +68,24 @@ function showProductsList() {
 
             // datos a insertar en el html que dependen del filtro
             htmlContentToAppend += `
-             <a href="product-info.html" class="list-group-item list-group-item-action">
-                 <div class="row">
-                     <div class="col-3">
-                         <img src="${product.imgSrc}" alt="${product.description}" class="img-thumbnail">
-                     </div>
-                     <div class="col">
-                         <div class="d-flex w-100 justify-content-between">
-                             <h4 class="mb-1">${product.name}</h4>
-                             <small class="text-muted">${product.soldCount} artículos vendidos</small>
-                         </div>
-                         <p class="mb-1">${product.description}</p>
-                         <strong><p class="mb-1">${product.currency} ${product.cost}</p></strong>
-                     </div>
-                 </div>
-             </a>`
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <a href="product-info.html" class="card mb-4 shadow-sm custom-card">
+                <img class="bd-placeholder-img card-img-top" src="${product.imgSrc}" alt="${product.description}">
+                <div class="card-body">
+                    <h4 class="mb-1">${product.name}</h4>
+                    <strong><p class="mb-1">${product.currency} ${product.cost}</p></strong>
+                    <p class="card-text">${product.description}</p>
+                    <small class="text-muted">${product.soldCount} artículos vendidos</small>
+                </div>
+                </a>
+            </div>`
         }
     }
+
     //  salgo del for con todos los datos incluidos sin sobreescribirlos
     PRODUCT_CONTAINER.innerHTML = htmlContentToAppend;
 }
+
 
 /**
  * Toma los valores que trae la lista de productos y los ordena según el criterio que se le pase.
@@ -171,21 +169,17 @@ const SEARCH_BAR_FILTER = () => {
             let nombre = product.name.toLowerCase();
             if ((nombre.includes(searchBarText))) {
                 PRODUCT_CONTAINER.innerHTML += `
-            <a href="product-info.html" class="list-group-item list-group-item-action">
-            <div class="row">
-                <div class="col-3">
-                    <img src="${product.imgSrc}" alt="${product.description}" class="img-thumbnail">
-                </div>
-                <div class="col">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h4 class="mb-1">${product.name}</h4>
-                        <small class="text-muted">${product.soldCount} artículos vendidos</small>
-                    </div>
-                    <p class="mb-1">${product.description}</p>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                <a href="product-info.html" class="card mb-4 shadow-sm custom-card">
+                <img class="bd-placeholder-img card-img-top" src="${product.imgSrc}" alt="${product.description}">
+                <div class="card-body">
+                    <h4 class="mb-1">${product.name}</h4>
                     <strong><p class="mb-1">${product.currency} ${product.cost}</p></strong>
+                    <p class="card-text">${product.description}</p>
+                    <small class="text-muted">${product.soldCount} artículos vendidos</small>
                 </div>
-            </div>
-        </a>`;
+                </a>
+            </div>`;
                 // Sumo 1 conforme vaya encontrando valores, si no encuentra pasa a 0 y eso ejecuta el siguiente if.
                 c++;
             }
@@ -201,6 +195,22 @@ const SEARCH_BAR_FILTER = () => {
     </div>`;
     }
 }
+
+/* <a href="product-info.html" class="list-group-item list-group-item-action">
+            <div class="row">
+                <div class="col-3">
+                    <img src="${product.imgSrc}" alt="${product.description}" class="img-thumbnail">
+                </div>
+                <div class="col">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h4 class="mb-1">${product.name}</h4>
+                        <small class="text-muted">${product.soldCount} artículos vendidos</small>
+                    </div>
+                    <p class="mb-1">${product.description}</p>
+                    <strong><p class="mb-1">${product.currency} ${product.cost}</p></strong>
+                </div>
+            </div>
+        </a> */
 
 /*
 Función que se ejecuta una vez que se haya lanzado el evento de
