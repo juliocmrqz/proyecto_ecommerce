@@ -8,8 +8,9 @@ const CURRENCY_EXCHANGE = 40;
 const CURRENCY = "UYU";
 const TOTAL_AFTER_SHIPPING = document.getElementById("total-after-shipping");
 const SHIPPING_COST = document.getElementById("shipping-cost");
+let btnDanger = document.getElementsByClassName('btn-danger');
 let cartProducts;
-let total = 0;
+let subtotal = 0;
 
 /**
  * Toma el indice del valor que recibe
@@ -26,17 +27,18 @@ function currencyConverter(id, cost) {
 }
 
 /**
- * Inicializa el total a 0 y recorre la lista de articulos, considerando el subtotal y lo inserta ya convertido a pesos dentro del HTML
+ * Inicializa el subtotal en 0 y recorre la lista de elementos con la clase subtotal_individual, considerando el subtotal y lo inserta ya convertido a pesos dentro del HTML
  * Además muestra el valor total del carrito más el costo de envío.
  * Considera el indice de cada producto más el costo ya que debe evaluar la moneda del producto para ver si hace o no la conversión a UYU
  */
-function showTotal() {
-  total = 0;
-  for (let i = 0; i < cartProducts.articles.length; i++) {
-    let subtotal = parseFloat(document.getElementById(`subtotal${i}`).innerHTML);
-    total += currencyConverter(i, subtotal);
+function showSubtotal() {
+  subtotal = 0;
+  const SUBTOTAL_INDIVIDUAL_CONTAINER = document.getElementsByClassName('subtotal_individual');
+  for (let i = 0; i < SUBTOTAL_INDIVIDUAL_CONTAINER.length; i++) {
+    SUBTOTAL_UNICO = SUBTOTAL_INDIVIDUAL_CONTAINER[i];
+    subtotal += currencyConverter(i, parseFloat(SUBTOTAL_UNICO.innerText));
   }
-  CART_SUBTOTAL_CONTAINER.innerHTML = `UYU ${addCommasToNumbersOverAThousand(total.toFixed(2))}`;
+  CART_SUBTOTAL_CONTAINER.innerHTML = `UYU ${addCommasToNumbersOverAThousand(subtotal.toFixed(2))}`;
   totalCostAfterShippingMethod()
 }
 
@@ -49,26 +51,41 @@ function showTotal() {
 function priceMultiplier(index) {
   let precio = parseInt(document.getElementById(`precio${index}`).innerText);
   let cantidad = parseInt(document.getElementById(`cantidad${index}`).value);
-  // cartProducts.articles[index].count = cantidad;
   let subtotal_individual = precio * cantidad;
   document.getElementById(`subtotal${index}`).innerHTML = subtotal_individual;
-  showTotal();
+  showSubtotal();
 }
- /**
-  * Función para remover el articulo según el indice del producto que se le pase al botón con evento onclick.
-  * Remueve el articulo de la lista de articulos en el carrito, así solo debe mostrarse la lista nuevamente de artículos restantes.
-  * Adicional a esto sigue mostrando el restante del carrito  
-  */
+
+/**
+ * Función para remover el articulo según el indice del producto que se le pase al botón con evento onclick.
+ * Remueve el articulo de la lista de articulos en el carrito, así solo debe mostrarse la lista nuevamente de artículos restantes.
+ * Adicional a esto sigue mostrando el restante del carrito  
+ */
 function removeCartItem(index) {
   cartProducts.articles.splice(index, 1);
-  showCartInfo();
+}
+
+/**
+ * Función que toma el listado de botones
+ * los recorre y dependiendo del boton donde esté, elimina el elemento padre del elemento padre donde está, así saca la fila
+ * además de eso actualiza el subtotal.
+ * Mantiene así el subtotal calculado, en lugar de volver a traer la lista de elementos del json.
+ */
+function removeButtonClicked() {
+  for (let i = 0; i < btnDanger.length; i++) {
+    let buttonClicked = btnDanger[i];
+    buttonClicked.addEventListener('click', function () {
+      buttonClicked.parentElement.parentElement.remove();
+      showSubtotal();
+    })
+  }
 }
 
 /**
  * Muestro los datos recibidos del getJSONData recorriendo la lista que se guarda localmente de productos en el carrito
  * Crea el HTML necesario para insertarlo en el contenedor del carrito de compra
  * Toma la cuenta del total de articulos que están ingresados en el carrito
- * Utiliza la función ShowTotal para poder mostrar el total del costo de los productos sin tener que esperar algún evento.
+ * Utiliza la función showSubtotal para poder mostrar el total del costo de los productos sin tener que esperar algún evento.
  */
 function showCartInfo() {
   let htmlContentToAppend = "";
@@ -97,7 +114,7 @@ function showCartInfo() {
         </div>
     </td>
     <td>
-        <h6><span id="currencySubtotal${i}">${productInCart.currency}</span><span id="subtotal${i}" class="cart_item_text"> ${productInCart.count * productInCart.unitCost}</span></h6>
+        <h6><span id="currencySubtotal${i}">${productInCart.currency}</span>`+ " " +`<span id="subtotal${i}" class="cart_item_text subtotal_individual">${productInCart.count * productInCart.unitCost}</span></h6>
     </td>
     <td>
         <button href="#" class="btn btn-danger" onclick="removeCartItem(${i})"><i class="fa fa-trash"></i></button>
@@ -107,7 +124,7 @@ function showCartInfo() {
   }
   CART_CONTAINER.innerHTML = htmlContentToAppend;
   CART_QUANTITY.innerHTML = cartQuantity;
-  showTotal();
+  showSubtotal();
 }
 
 /**
@@ -118,8 +135,8 @@ function showCartInfo() {
  */
 function totalCostAfterShippingMethod() {
   var shippingCostPercentage = document.getElementById("moneda").value;
-  let shippingCost = addCommasToNumbersOverAThousand(parseInt(total * (shippingCostPercentage / 100)).toFixed(2)) + "<br>" + `<small class="text-muted">(${shippingCostPercentage}% del subtotal)</small>`;
-  let totalCostToShow = CURRENCY + " " + addCommasToNumbersOverAThousand(parseFloat((Math.round(total * shippingCostPercentage) / 100) + total).toFixed(2));
+  let shippingCost = addCommasToNumbersOverAThousand(parseInt(subtotal * (shippingCostPercentage / 100)).toFixed(2)) + "<br>" + `<small class="text-muted">(${shippingCostPercentage}% del subtotal)</small>`;
+  let totalCostToShow = CURRENCY + " " + addCommasToNumbersOverAThousand(parseFloat((Math.round(subtotal * shippingCostPercentage) / 100) + subtotal).toFixed(2));
   TOTAL_AFTER_SHIPPING.innerHTML = totalCostToShow;
   SHIPPING_COST.innerHTML = shippingCost;
 }
@@ -129,6 +146,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     if (cartInfo.status === "ok") {
       cartProducts = cartInfo.data;
       showCartInfo();
+      removeButtonClicked();
     }
   });
 });
