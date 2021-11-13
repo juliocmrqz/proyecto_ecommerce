@@ -1,6 +1,3 @@
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
 const CART_CONTAINER = document.getElementById("cart-container");
 const CART_SUBTOTAL_CONTAINER = document.getElementById("cart-subtotal");
 const CART_QUANTITY = document.getElementById("cart-quantity");
@@ -8,7 +5,20 @@ const CURRENCY_EXCHANGE = 40;
 const CURRENCY = "UYU";
 const TOTAL_AFTER_SHIPPING = document.getElementById("total-after-shipping");
 const SHIPPING_COST = document.getElementById("shipping-cost");
-let btnDanger = document.getElementsByClassName('btn-danger');
+const PAYMENT_METHOD_MODAL_BUTTON = document.getElementById("payment-method-modal");
+const ERROR_MESSAGE_CONTAINER = document.getElementsByClassName('error-message-container');
+const ERROR_MESSAGE_CONTAINER_WT = document.getElementsByClassName('error-message-container-wt');
+const ERROR_MESSAGE_CONTAINER_ADDRESS = document.getElementsByClassName('error-message-container-address');
+const ERROR_MESSAGE_CONTAINER_SHIPPING = document.getElementById('error-message-container-shipping');
+const SELECT_PAYMENT_METHOD_FORM = document.getElementById('select-payment-method-form');
+const INPUTS_CREDIT_CARD = document.getElementsByClassName('credit-card');
+const INPUTS_WIRE_TRANSFER = document.getElementsByClassName('wire-transfer');
+const CREDIT_CARD_RADIO = document.getElementById('credit-card');
+const WIRE_TRANSFER_RADIO = document.getElementById('wire-transfer');
+const INPUTS_PAYMENT_METHOD = document.getElementsByName('selected-payment-method');
+const PRODUCT_QUANTITY = document.getElementsByClassName('product-quantity');
+const ADDRESS_VALIDATION = document.getElementsByClassName('address-validation');
+const SUBTOTAL_INDIVIDUAL_CONTAINER = document.getElementsByClassName('subtotal_individual');
 let cartProducts;
 let subtotal = 0;
 
@@ -33,7 +43,6 @@ function currencyConverter(id, cost) {
  */
 function showSubtotal() {
   subtotal = 0;
-  const SUBTOTAL_INDIVIDUAL_CONTAINER = document.getElementsByClassName('subtotal_individual');
   for (let i = 0; i < SUBTOTAL_INDIVIDUAL_CONTAINER.length; i++) {
     SUBTOTAL_UNICO = SUBTOTAL_INDIVIDUAL_CONTAINER[i];
     subtotal += currencyConverter(i, parseFloat(SUBTOTAL_UNICO.innerText));
@@ -51,8 +60,16 @@ function showSubtotal() {
 function priceMultiplier(index) {
   let precio = parseInt(document.getElementById(`precio${index}`).innerText);
   let cantidad = parseInt(document.getElementById(`cantidad${index}`).value);
-  let subtotal_individual = precio * cantidad;
-  document.getElementById(`subtotal${index}`).innerHTML = subtotal_individual;
+  document.getElementById(`cantidad${index}`).classList.remove('is-invalid');
+  if (cantidad >= 1) {
+    let subtotal_individual = precio * cantidad;
+    cartProducts.articles[index].count = cantidad;
+    document.getElementById(`subtotal${index}`).innerHTML = subtotal_individual;
+  } else {
+    subtotal_individual = 0;
+    document.getElementById(`cantidad${index}`).classList.add('is-invalid');
+    document.getElementById(`subtotal${index}`).innerHTML = subtotal_individual;
+  }
   showSubtotal();
 }
 
@@ -63,22 +80,7 @@ function priceMultiplier(index) {
  */
 function removeCartItem(index) {
   cartProducts.articles.splice(index, 1);
-}
-
-/**
- * Función que toma el listado de botones
- * los recorre y dependiendo del boton donde esté, elimina el elemento padre del elemento padre donde está, así saca la fila
- * además de eso actualiza el subtotal.
- * Mantiene así el subtotal calculado, en lugar de volver a traer la lista de elementos del json.
- */
-function removeButtonClicked() {
-  for (let i = 0; i < btnDanger.length; i++) {
-    let buttonClicked = btnDanger[i];
-    buttonClicked.addEventListener('click', function () {
-      buttonClicked.parentElement.parentElement.remove();
-      showSubtotal();
-    })
-  }
+  showCartInfo();
 }
 
 /**
@@ -110,11 +112,11 @@ function showCartInfo() {
     </td>
     <td>
         <div class="counter">
-            <input min="1" max="99" class="form-control" placeholder="${productInCart.count}" id="cantidad${i}" class="cart_item_text" min="1" value="${productInCart.count}" type="number" onchange="priceMultiplier(${i})"/>
+            <input min="1" max="99" class="form-control cart_item_text product-quantity" placeholder="${productInCart.count}" id="cantidad${i}" min="1" value="${productInCart.count}" type="number" onchange="priceMultiplier(${i})"/>
         </div>
     </td>
     <td>
-        <h6><span id="currencySubtotal${i}">${productInCart.currency}</span>`+ " " +`<span id="subtotal${i}" class="cart_item_text subtotal_individual">${productInCart.count * productInCart.unitCost}</span></h6>
+        <h6><span id="currencySubtotal${i}">${productInCart.currency}</span>` + " " + `<span id="subtotal${i}" class="cart_item_text subtotal_individual">${productInCart.count * productInCart.unitCost}</span></h6>
     </td>
     <td>
         <button href="#" class="btn btn-danger" onclick="removeCartItem(${i})"><i class="fa fa-trash"></i></button>
@@ -141,12 +143,146 @@ function totalCostAfterShippingMethod() {
   SHIPPING_COST.innerHTML = shippingCost;
 }
 
+
+for (let i = 0; i < document.getElementsByName('selected-payment-method').length; i++) {
+  const element = document.getElementsByName('selected-payment-method')[i];
+  element.addEventListener('change', function () {
+    if (CREDIT_CARD_RADIO.checked) {
+      document.getElementById('selecciona-un-metodo').setAttribute('hidden', '');
+      for (let i = 0; i < INPUTS_WIRE_TRANSFER.length; i++) {
+        ERROR_MESSAGE_CONTAINER_WT[i].innerText = '';
+      }
+    }
+    if (WIRE_TRANSFER_RADIO.checked) {
+      document.getElementById('selecciona-un-metodo').setAttribute('hidden', '');
+      for (let i = 0; i < INPUTS_CREDIT_CARD.length; i++) {
+        ERROR_MESSAGE_CONTAINER[i].innerText = '';
+      }
+    }
+  })
+}
+
+for (let i = 0; i < INPUTS_PAYMENT_METHOD.length; i++) {
+  const INPUT_CHECKED = INPUTS_PAYMENT_METHOD[i];
+  INPUT_CHECKED.addEventListener('click', function (e) {
+    INPUT_CHECKED.checked;
+    if (INPUT_CHECKED.checked) {
+      if (INPUT_CHECKED.id === "credit-card") {
+        for (let i = 0; i < document.getElementsByClassName('wire-transfer').length; i++) {
+          const element = document.getElementsByClassName('wire-transfer')[i];
+          element.setAttribute('disabled', '');
+        }
+        for (let i = 0; i < document.getElementsByClassName('credit-card').length; i++) {
+          const element = document.getElementsByClassName('credit-card')[i];
+          element.removeAttribute('disabled');
+        }
+      }
+      if (INPUT_CHECKED.id === "wire-transfer") {
+        for (let i = 0; i < document.getElementsByClassName('credit-card').length; i++) {
+          const element = document.getElementsByClassName('credit-card')[i];
+          element.setAttribute('disabled', '');
+        }
+        for (let i = 0; i < document.getElementsByClassName('wire-transfer').length; i++) {
+          const element = document.getElementsByClassName('wire-transfer')[i];
+          element.removeAttribute('disabled');
+        }
+      }
+    }
+  })
+}
+
 document.addEventListener("DOMContentLoaded", function (e) {
   getJSONData(CART_INFO_URL).then(function (cartInfo) {
     if (cartInfo.status === "ok") {
       cartProducts = cartInfo.data;
       showCartInfo();
-      removeButtonClicked();
+      // removeButtonClicked();
     }
   });
 });
+
+
+document.getElementById('moneda').addEventListener('change', function () {
+  PAYMENT_METHOD_MODAL_BUTTON.removeAttribute('disabled');
+  ERROR_MESSAGE_CONTAINER_SHIPPING.innerText = '';
+})
+
+
+PAYMENT_METHOD_MODAL_BUTTON.addEventListener('click', function (e) {
+  PAYMENT_METHOD_MODAL_BUTTON.removeAttribute('disabled');
+  for (let i = 0; i < ADDRESS_VALIDATION.length; i++) {
+    const ADDRESS_ELEMENT = ADDRESS_VALIDATION[i];
+    if (ADDRESS_ELEMENT.value === '' || ADDRESS_ELEMENT.VALUE === null) {
+      ERROR_MESSAGE_CONTAINER_ADDRESS[i].innerText = 'campo requerido';
+      PAYMENT_METHOD_MODAL_BUTTON.setAttribute('disabled', '');
+      setTimeout(() => {
+        PAYMENT_METHOD_MODAL_BUTTON.removeAttribute('disabled');
+      }, 1000);
+    } else {
+      ERROR_MESSAGE_CONTAINER_ADDRESS[i].innerText = '';
+    }
+    if (document.getElementById('moneda').value === '') {
+      ERROR_MESSAGE_CONTAINER_SHIPPING.innerText = 'campo requerido';
+      PAYMENT_METHOD_MODAL_BUTTON.setAttribute('disabled', '');
+      document.getElementById('formulario-select-shipping').classList.add('was-validated');
+      setTimeout(() => {
+        PAYMENT_METHOD_MODAL_BUTTON.removeAttribute('disabled');
+      }, 1000);
+    } else {
+      ERROR_MESSAGE_CONTAINER_SHIPPING.innerText = '';
+    }
+  }
+  if (cartProducts.articles.length === 0) {
+    alert('que vas a pagar wacho?'); // MODIFICAR
+    PAYMENT_METHOD_MODAL_BUTTON.setAttribute('disabled', '');
+    setTimeout(() => {
+      PAYMENT_METHOD_MODAL_BUTTON.removeAttribute('disabled');
+    }, 1000);
+  }
+  if (subtotal <= 0) {
+    alert('El total a pagar no puede ser igual o menor a cero'); // MODIFICAR
+    PAYMENT_METHOD_MODAL_BUTTON.setAttribute('disabled', '');
+    setTimeout(() => {
+      PAYMENT_METHOD_MODAL_BUTTON.removeAttribute('disabled');
+    }, 1000);
+  }
+});
+
+SELECT_PAYMENT_METHOD_FORM.addEventListener('submit', function (e) {
+  if (CREDIT_CARD_RADIO.checked) {
+    document.getElementById('selecciona-un-metodo').setAttribute('hidden', '');
+    for (let i = 0; i < INPUTS_WIRE_TRANSFER.length; i++) {
+      ERROR_MESSAGE_CONTAINER_WT[i].innerText = '';
+    }
+    for (let i = 0; i < INPUTS_CREDIT_CARD.length; i++) {
+      const INPUT_CC = INPUTS_CREDIT_CARD[i];
+      if ((INPUT_CC.value === '') || (INPUT_CC.value === null)) {
+        e.preventDefault();
+        ERROR_MESSAGE_CONTAINER[i].innerText = 'campo requerido';
+      } else {
+        ERROR_MESSAGE_CONTAINER[i].innerText = '';
+        e.preventDefault();
+        window.location.href = "checkout.html";
+      }
+    }
+  } else if (WIRE_TRANSFER_RADIO.checked) {
+    document.getElementById('selecciona-un-metodo').setAttribute('hidden', '');
+    for (let i = 0; i < INPUTS_CREDIT_CARD.length; i++) {
+      ERROR_MESSAGE_CONTAINER[i].innerText = '';
+    }
+    for (let i = 0; i < INPUTS_WIRE_TRANSFER.length; i++) {
+      const INPUT_WT = INPUTS_WIRE_TRANSFER[i];
+      if ((INPUT_WT.value === '' || INPUT_WT.value === null)) {
+        e.preventDefault();
+        ERROR_MESSAGE_CONTAINER_WT[i].innerText = 'campo requerido';
+      } else {
+        ERROR_MESSAGE_CONTAINER_WT[i].innerText = '';
+        e.preventDefault();
+        window.location.href = "checkout.html";
+      }
+    }
+  } else {
+    e.preventDefault();
+    document.getElementById('selecciona-un-metodo').removeAttribute('hidden');
+  }
+})

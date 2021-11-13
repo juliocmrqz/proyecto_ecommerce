@@ -62,23 +62,28 @@
         <div class="row">
             <div class="col-md-8">
                 <h3 class="mt-5">Datos de envío:</h3>
-                <form>
+                <form class=""> <!-- was-validated -->
                     <div class="form-group">
                         <label for="">Dirección:</label>
-                        <input type="text" class="form-control" id="" placeholder="Dirección del domicilio">
+                        <input type="text" class="form-control address-validation" id=""
+                            placeholder="Dirección del domicilio">
+                        <div class="error-message-container-address"></div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="">Ciudad:</label>
-                            <input type="text" class="form-control" id="" placeholder="Ciudad">
+                            <input type="text" class="form-control address-validation" id="" placeholder="Ciudad">
+                            <div class="error-message-container-address"></div>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="">País:</label>
-                            <input type="text" class="form-control" id="" placeholder="País">
+                            <input type="text" class="form-control address-validation" id="" placeholder="País">
+                            <div class="error-message-container-address"></div>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="">Código postal</label>
-                            <input type="text" class="form-control" id="" placeholder="Zip code">
+                            <input type="text" class="form-control address-validation" id="" placeholder="Zip code">
+                            <div class="error-message-container-address"></div>
                         </div>
                     </div>
                 </form>
@@ -101,33 +106,136 @@
                         </li>
                         <li>Método de envio</li>
                         <li>
-                            <select class="form-control" name="moneda" id="moneda"
-                                onchange="totalCostAfterShippingMethod()">
-                                <option value="">-- Seleccionar --</option>
-                                <option value="15">Premium (2-5 días)</option>
-                                <option value="7">Express (5-8 días)</option>
-                                <option value="5">Standard (12 a 15 días)</option>
-                            </select>
-                        </li>
-                        <li class="mt-2">
-                            Costo de envío:
-                            <span id="shipping-cost"></span>
-                        </li>
+                            <form id="formulario-select-shipping" action="" class="">
+                                <div class="form-group">
+                                    <select class="custom-select" name="moneda" id="moneda"
+                                        onchange="totalCostAfterShippingMethod()" required>
+                                        <option value="">-- Seleccionar --</option>
+                                        <option value="15">Premium (2-5 días)</option>
+                                        <option value="7">Express (5-8 días)</option>
+                                        <option value="5">Standard (12 a 15 días)</option>
+                                    </select>
+                                    <div id="error-message-container-shipping"></div>
+                            </form>
+                </div>
+                </li>
+                <li class="mt-2">
+                    Costo de envío:
+                    <span id="shipping-cost"></span>
+                </li>
+                <hr>
+                <li class="cart-total">Total
+                    <span id="total-after-shipping"></span>
+                </li>
+                <li>
+                    <small class="text-muted">
+                        Todos los precios están expresados en pesos uruguayos
+                    </small>
+                </li>
+                </ul>
+                <button id="payment-method-modal" class="btn w-100 proceed-btn" data-toggle="modal"
+                    data-target="#paymentModal">SELECCIONAR METODO DE PAGO</button>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Selecciona el método de pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="error-message-container-seleccion" id="selecciona-un-metodo" hidden>Selecciona un método
+                    de pago</div>
+                <div class="modal-body">
+                    <form action="" id="select-payment-method-form">
+                        <input class="custom-radio" type="radio" name="selected-payment-method" id="credit-card">
+                        <label class="mt-1 mb-1" for="credit-card">Tarjeta de crédito</label>
+                        <div class="row">
+                            <div class="col-12 col-12">
+                                <label class="mt-1 mb-1" for="credit-card-owner">Titular de la tarjeta</label>
+                                <input class="form-control credit-card" type="text" name="credit-card-owner"
+                                    id="credit-card-number" placeholder="nombre del titular">
+                                <div class="error-message-container"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8">
+                                <label class="mt-1 mb-1" for="credit-card-number">Número de Tarjeta</label>
+                                <input class="form-control credit-card" type="text" minlength="16"
+                                    name="credit-card-number" id="credit-card-number" placeholder="---- ---- ---- ----">
+                                <div class="error-message-container"></div>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <label class="mt-1 mb-1" for="credit-card-cvv">CVV</label>
+                                <input class="form-control credit-card" type="number" name="credit-card-cvv"
+                                    id="credit-card-cvv" placeholder="CVV">
+                                <div class="error-message-container"></div>
+                            </div>
+                        </div>
+                        <label class="mt-1 mb-1" for="credit-card-valid-date">Vencimiento</label>
+                        <div class="row">
+                            <div class="col-md-3 pr-1 col-sm-3">
+                                <select class="form-control credit-card" type="date" name="credit-card-valid-date"
+                                    id="credit-card-number">
+                                    <option value="" selected disabled>mes</option>
+                                    <option value="01">enero</option>
+                                    <option value="02">febrero</option>
+                                    <option value="03">marzo</option>
+                                    <option value="04">abril</option>
+                                    <option value="05">mayo</option>
+                                    <option value="06">junio</option>
+                                    <option value="07">julio</option>
+                                    <option value="08">agosto</option>
+                                    <option value="09">septiembre</option>
+                                    <option value="10">octubre</option>
+                                    <option value="11">noviembre</option>
+                                    <option value="12">diciembre</option>
+                                </select>
+                                <div class="error-message-container"></div>
+                            </div>
+                            <div class="col-md-3 pl-0 col-sm-3">
+                                <select class="form-control credit-card" type="date" name="credit-card-valid-date"
+                                    id="credit-card-number">
+                                    <option value="" selected disabled>año</option>
+                                    <option value="21">2021</option>
+                                    <option value="22">2022</option>
+                                    <option value="23">2023</option>
+                                    <option value="24">2024</option>
+                                    <option value="25">2025</option>
+                                    <option value="26">2026</option>
+                                    <option value="27">2027</option>
+                                    <option value="28">2028</option>
+                                    <option value="29">2029</option>
+                                    <option value="30">2030</option>
+                                </select>
+                                <div class="error-message-container"></div>
+                            </div>
+                        </div>
                         <hr>
-                        <li class="cart-total">Total
-                            <span id="total-after-shipping"></span>
-                        </li>
-                        <li>
-                            <small class="text-muted">
-                                Todos los precios están expresados en pesos uruguayos
-                            </small>
-                        </li>
-                    </ul>
-                    <a href="#" class="proceed-btn">COMPRAR</a>
+                        <input class="custom-radio" type="radio" name="selected-payment-method" id="wire-transfer">
+                        <label for="wire-transfer">Transferencia Bancaria</label>
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="wire-transfer-number">Código de transferencia</label>
+                                <input class="form-control wire-transfer" type="text" name="wire-transfer-number"
+                                    id="wire-transfer-number">
+                                <div class="error-message-container-wt"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Comprar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+    <!-- ===================================== -->
     <!-- Spinner -->
     <div id="spinner-wrapper">
         <div class="lds-ring">
