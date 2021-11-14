@@ -300,7 +300,14 @@ SELECT_PAYMENT_METHOD_FORM.addEventListener('submit', function (e) {
       } else {
         ERROR_MESSAGE_CONTAINER[i].innerText = '';
         e.preventDefault();
-        window.location.href = "checkout.html";
+        if (
+          document.getElementById("credit-card-owner").value !== "" &&
+          document.getElementById("credit-card-number").value !== "" &&
+          document.getElementById("credit-card-cvv").value !== "" &&
+          document.getElementById("credit-card-valid-date").value !== "" &&
+          document.getElementById("credit-card-valid-year").value !== "") {
+          window.location.href = "checkout.html";
+        }
       }
     }
   } else if (WIRE_TRANSFER_RADIO.checked) {
@@ -314,6 +321,10 @@ SELECT_PAYMENT_METHOD_FORM.addEventListener('submit', function (e) {
         e.preventDefault();
         ERROR_MESSAGE_CONTAINER_WT[i].innerText = 'campo requerido';
       } else {
+        if (
+          document.getElementById("wire-transfer-number").value !== "") {
+          window.location.href = "checkout.html";
+        }
         ERROR_MESSAGE_CONTAINER_WT[i].innerText = '';
         e.preventDefault();
         window.location.href = "checkout.html";
