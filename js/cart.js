@@ -36,6 +36,7 @@ function currencyConverter(id, cost) {
   }
 }
 
+
 /**
  * Inicializa el subtotal en 0 y recorre la lista de elementos con la clase subtotal_individual, considerando el subtotal y lo inserta ya convertido a pesos dentro del HTML
  * Además muestra el valor total del carrito más el costo de envío.
@@ -50,6 +51,7 @@ function showSubtotal() {
   CART_SUBTOTAL_CONTAINER.innerHTML = `UYU ${addCommasToNumbersOverAThousand(subtotal.toFixed(2))}`;
   totalCostAfterShippingMethod()
 }
+
 
 /**
  * Función que toma el indice para poder identificar cada valor a utilizar para el calculo de precio por cantidad para subtotal por producto
@@ -73,6 +75,7 @@ function priceMultiplier(index) {
   showSubtotal();
 }
 
+
 /**
  * Función para remover el articulo según el indice del producto que se le pase al botón con evento onclick.
  * Remueve el articulo de la lista de articulos en el carrito, así solo debe mostrarse la lista nuevamente de artículos restantes.
@@ -82,6 +85,7 @@ function removeCartItem(index) {
   cartProducts.articles.splice(index, 1);
   showCartInfo();
 }
+
 
 /**
  * Muestro los datos recibidos del getJSONData recorriendo la lista que se guarda localmente de productos en el carrito
@@ -129,6 +133,7 @@ function showCartInfo() {
   showSubtotal();
 }
 
+
 /**
  * Toma el valor del select el cual solo guarda el porcentaje en número entero del costo de envío
  * Agrega en el HTML el porcentaje de envío en HTML más texto de apoyo para el comprador, así no lo pasa en el select
@@ -136,7 +141,7 @@ function showCartInfo() {
  * Inserta en el HTML el valor calculado
  */
 function totalCostAfterShippingMethod() {
-  var shippingCostPercentage = document.getElementById("moneda").value;
+  var shippingCostPercentage = document.getElementById("tipo-envio").value;
   let shippingCost = addCommasToNumbersOverAThousand(parseInt(subtotal * (shippingCostPercentage / 100)).toFixed(2)) + "<br>" + `<small class="text-muted">(${shippingCostPercentage}% del subtotal)</small>`;
   let totalCostToShow = CURRENCY + " " + addCommasToNumbersOverAThousand(parseFloat((Math.round(subtotal * shippingCostPercentage) / 100) + subtotal).toFixed(2));
   TOTAL_AFTER_SHIPPING.innerHTML = totalCostToShow;
@@ -144,6 +149,12 @@ function totalCostAfterShippingMethod() {
 }
 
 
+/**
+ * Recorremos una lista de elementos input radio con el mismo nombre
+ * verificamos con un evento change si está checked credit card o transferencia bancaria
+ * Esto al seleccionar un método de pago, quita del input el mensaje de campo requerido
+ * Así solo marca por rellenar los inputs del tipo de pago seleccionado.
+ */
 for (let i = 0; i < document.getElementsByName('selected-payment-method').length; i++) {
   const element = document.getElementsByName('selected-payment-method')[i];
   element.addEventListener('change', function () {
@@ -162,6 +173,14 @@ for (let i = 0; i < document.getElementsByName('selected-payment-method').length
   })
 }
 
+
+/**
+ * Recorremos una lista de inputs del metodo de pago
+ * Revisamos si se hace el evento click, al pasar eso le hace checked al elemento
+ * si esto pasa y el id del elemento es tarjeta de crédito, desabilita los campos de transferencia bancaria
+ * caso contrario, si es transferencia bancaria el que está checked, desabilita los campos de tarjeta de crédito.
+ * Esto lo hace recorriendo una lista de elementos con el mismo nombre de clase para cada input radio seleccionado.
+ */
 for (let i = 0; i < INPUTS_PAYMENT_METHOD.length; i++) {
   const INPUT_CHECKED = INPUTS_PAYMENT_METHOD[i];
   INPUT_CHECKED.addEventListener('click', function (e) {
@@ -191,25 +210,29 @@ for (let i = 0; i < INPUTS_PAYMENT_METHOD.length; i++) {
   })
 }
 
-document.addEventListener("DOMContentLoaded", function (e) {
-  getJSONData(CART_INFO_URL).then(function (cartInfo) {
-    if (cartInfo.status === "ok") {
-      cartProducts = cartInfo.data;
-      showCartInfo();
-      // removeButtonClicked();
-    }
-  });
-});
 
-
-document.getElementById('moneda').addEventListener('change', function () {
+/**
+ * Al tener un cambio en el select del metodo de envío
+ * este saca el disabled del boton de selección de método de pago y saca el mensaje de error
+ * indicando que el campo es requerido.
+ */
+document.getElementById('tipo-envio').addEventListener('change', function () {
   PAYMENT_METHOD_MODAL_BUTTON.removeAttribute('disabled');
   ERROR_MESSAGE_CONTAINER_SHIPPING.innerText = '';
 })
 
 
+/**
+ * Toma el evento click en el boton de selección de método de pago
+ * de ahí, evalúa si los campos de la dirección de envío y el método de envio seleccionado
+ * se encuentran seleccionados o completados, si los campos se encuentran vacíos o no seleccionados
+ * deshabilita el boton para mostrar el modal por 1 segundo y muestra los campos que están requeridos
+ * para poder continuar.
+ * Además, evalua si la cantidad de articulos en el carrito es igual a cero o si el monto a pagar 
+ * es menor o igual a cero, no permitiendo continuar hasta la selección de pago de no tener nada que pagar
+ * en el carrito.
+ */
 PAYMENT_METHOD_MODAL_BUTTON.addEventListener('click', function (e) {
-  PAYMENT_METHOD_MODAL_BUTTON.removeAttribute('disabled');
   for (let i = 0; i < ADDRESS_VALIDATION.length; i++) {
     const ADDRESS_ELEMENT = ADDRESS_VALIDATION[i];
     if (ADDRESS_ELEMENT.value === '' || ADDRESS_ELEMENT.VALUE === null) {
@@ -221,7 +244,7 @@ PAYMENT_METHOD_MODAL_BUTTON.addEventListener('click', function (e) {
     } else {
       ERROR_MESSAGE_CONTAINER_ADDRESS[i].innerText = '';
     }
-    if (document.getElementById('moneda').value === '') {
+    if (document.getElementById('tipo-envio').value === '') {
       ERROR_MESSAGE_CONTAINER_SHIPPING.innerText = 'campo requerido';
       PAYMENT_METHOD_MODAL_BUTTON.setAttribute('disabled', '');
       document.getElementById('formulario-select-shipping').classList.add('was-validated');
@@ -233,14 +256,14 @@ PAYMENT_METHOD_MODAL_BUTTON.addEventListener('click', function (e) {
     }
   }
   if (cartProducts.articles.length === 0) {
-    alert('que vas a pagar wacho?'); // MODIFICAR
+    alert('¡El carrito se encuentra vacío!');
     PAYMENT_METHOD_MODAL_BUTTON.setAttribute('disabled', '');
     setTimeout(() => {
       PAYMENT_METHOD_MODAL_BUTTON.removeAttribute('disabled');
     }, 1000);
   }
   if (subtotal <= 0) {
-    alert('El total a pagar no puede ser igual o menor a cero'); // MODIFICAR
+    alert('¡La cantidad a pagar no puede ser 0!'); // MODIFICAR
     PAYMENT_METHOD_MODAL_BUTTON.setAttribute('disabled', '');
     setTimeout(() => {
       PAYMENT_METHOD_MODAL_BUTTON.removeAttribute('disabled');
@@ -248,6 +271,21 @@ PAYMENT_METHOD_MODAL_BUTTON.addEventListener('click', function (e) {
   }
 });
 
+
+/**
+ * Evento en el boton submit del formulario de método de pago
+ * evalua si algún input radio con el método de pago está seleccionado
+ * de no estarlo muestra un mensaje para elegir método de pago
+ * 
+ * De estar checked tarjeta de crédito evalua que los campos de ese método de pago estén completos
+ * o muestra mensaje de campo requerido.
+ * De estar checked transferencia bancaria evalua que los campos de ese método de pago estén completos
+ * o muestra mensaje de campo requerido.
+ * 
+ * Si todos los campos estén completos dependiendo del método de pago, permite continuar
+ * hasta la página de checkout con la compra hecha. Esto evitando el envío de formulario que recarga la página
+ * pero permitiendo cambiar de ventana con el número de orden y mensaje de check out del sitio.
+ */
 SELECT_PAYMENT_METHOD_FORM.addEventListener('submit', function (e) {
   if (CREDIT_CARD_RADIO.checked) {
     document.getElementById('selecciona-un-metodo').setAttribute('hidden', '');
@@ -286,3 +324,15 @@ SELECT_PAYMENT_METHOD_FORM.addEventListener('submit', function (e) {
     document.getElementById('selecciona-un-metodo').removeAttribute('hidden');
   }
 })
+
+/**
+ * Función que se ejecutan al cargar la página, mostrar el carrito que se trae del JSON.
+ */
+document.addEventListener("DOMContentLoaded", function (e) {
+  getJSONData(CART_INFO_URL).then(function (cartInfo) {
+    if (cartInfo.status === "ok") {
+      cartProducts = cartInfo.data;
+      showCartInfo();
+    }
+  });
+});
