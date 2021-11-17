@@ -1,11 +1,11 @@
-const CATEGORIES_URL = "https://japdevdep.github.io/ecommerce-api/category/all.json";
-const PUBLISH_PRODUCT_URL = "https://japdevdep.github.io/ecommerce-api/product/publish.json";
-const CATEGORY_INFO_URL = "https://japdevdep.github.io/ecommerce-api/category/1234.json";
-const PRODUCTS_URL = "https://japdevdep.github.io/ecommerce-api/product/all.json";
-const PRODUCT_INFO_URL = "https://japdevdep.github.io/ecommerce-api/product/5678.json";
-const PRODUCT_INFO_COMMENTS_URL = "https://japdevdep.github.io/ecommerce-api/product/5678-comments.json";
-const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/654.json";
-const CART_BUY_URL = "https://japdevdep.github.io/ecommerce-api/cart/buy.json";
+const CATEGORIES_URL = "http://localhost:3000/categorias";
+const PUBLISH_PRODUCT_URL = "http://localhost:3000/publicacion-exitosa";
+const CATEGORY_INFO_URL = "http://localhost:3000/categoria-info";
+const PRODUCTS_URL = "http://localhost:3000/productos";
+const PRODUCT_INFO_URL = "http://localhost:3000/producto-info";
+const PRODUCT_INFO_COMMENTS_URL = "http://localhost:3000/producto-comentarios";
+const CART_INFO_URL = "http://localhost:3000/carrito";
+const CART_BUY_URL = "http://localhost:3000/compra-exitosa";
 const NAVBAR_ALL = document.getElementById("navbar-all");
 
 function addCommasToNumbersOverAThousand(x) {
