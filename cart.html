@@ -62,27 +62,29 @@
         <div class="row">
             <div class="col-md-8">
                 <h3 class="mt-5">Datos de envío:</h3>
-                <form class=""> <!-- was-validated -->
+                <form class="">
+                    <!-- was-validated -->
                     <div class="form-group">
                         <label for="">Dirección:</label>
-                        <input type="text" class="form-control address-validation" id=""
+                        <input type="text" class="form-control address-validation" id="address-information"
                             placeholder="Dirección del domicilio">
                         <div class="error-message-container-address"></div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="">Ciudad:</label>
-                            <input type="text" class="form-control address-validation" id="" placeholder="Ciudad">
+                            <input type="text" class="form-control address-validation" id="city-information"
+                                placeholder="Ciudad">
                             <div class="error-message-container-address"></div>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="">País:</label>
-                            <input type="text" class="form-control address-validation" id="" placeholder="País">
+                            <input type="text" class="form-control address-validation" id="country-information" placeholder="País">
                             <div class="error-message-container-address"></div>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="">Código postal</label>
-                            <input type="text" class="form-control address-validation" id="" placeholder="Zip code">
+                            <input type="text" class="form-control address-validation" id="zipcode-information" placeholder="Zip code">
                             <div class="error-message-container-address"></div>
                         </div>
                     </div>
@@ -111,9 +113,9 @@
                                     <select class="custom-select" name="tipo-envio" id="tipo-envio"
                                         onchange="totalCostAfterShippingMethod()" required>
                                         <option value="">-- Seleccionar --</option>
-                                        <option value="15">Premium (2-5 días)</option>
-                                        <option value="7">Express (5-8 días)</option>
-                                        <option value="5">Standard (12 a 15 días)</option>
+                                        <option id="premium" value="15">Premium (2-5 días)</option>
+                                        <option id="express" value="7">Express (5-8 días)</option>
+                                        <option id="standard" value="5">Standard (12 a 15 días)</option>
                                     </select>
                                     <div id="error-message-container-shipping"></div>
                             </form>

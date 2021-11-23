@@ -2,13 +2,19 @@ const express = require('express');
 const path = require('path');
 const colors = require('colors');
 const cors = require('cors');
+const fs = require('fs');
 const port = 3000;
 const appExpress = express();
+const {
+    v4: uuidv4
+} = require('uuid');
 
 appExpress.use(
     express.static(
         path.join(__dirname, 'public')
-    )
+    ),
+    cors(),
+    express.json()
 );
 
 // disponibilizo las categorias
@@ -82,6 +88,22 @@ appExpress.get('/compra-exitosa', cors(), (req, res) => {
         )
     )
 });
+
+appExpress.post('/postData', (req, res) => {
+    let archivo = uuidv4() + 'test.json'; // por qué funciona el uuidv4 nada más
+    fs.writeFile(
+        path.join(
+            __dirname, `jsonpack/archivoTexto/${archivo}`
+        ),
+        JSON.stringify(req.body),
+        function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("The file was saved!");
+        });
+});
+
 
 
 appExpress.listen(port, () => {

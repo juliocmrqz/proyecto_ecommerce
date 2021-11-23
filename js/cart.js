@@ -22,6 +22,44 @@ const SUBTOTAL_INDIVIDUAL_CONTAINER = document.getElementsByClassName('subtotal_
 let cartProducts;
 let subtotal = 0;
 
+var cartDataAfterPurchase = {
+  customerInformation: {
+    name: null,
+    address: null,
+    city: null,
+    country: null,
+    zipcode: null
+  },
+  productInformation: null,
+  creditCardInformation: {
+    creditCardOwner: null,
+    creditCardNumber: null,
+    creditCardCVV: null,
+    creditCardValidDate: null,
+    creditCardValidYear: null
+  },
+  wireTransferInformation: {
+    wireTransferNumber: null
+  },
+  purchaseInformation: {
+    shippingMethod: null,
+    totalPurchase: null,
+    purchaseCurrency: 'UYU',
+    currencyExchange: null
+  }
+};
+
+var OBJECT_TO_TEXT = function (url) {
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(cartDataAfterPurchase)
+  }).then(window.location.href = "checkout.html");
+}
+
+
 /**
  * Toma el indice del valor que recibe
  * Toma el costo del producto
@@ -263,14 +301,13 @@ PAYMENT_METHOD_MODAL_BUTTON.addEventListener('click', function (e) {
     }, 1000);
   }
   if (subtotal <= 0) {
-    alert('¡La cantidad a pagar no puede ser 0!'); // MODIFICAR
+    alert('¡La cantidad a pagar no puede ser 0!');
     PAYMENT_METHOD_MODAL_BUTTON.setAttribute('disabled', '');
     setTimeout(() => {
       PAYMENT_METHOD_MODAL_BUTTON.removeAttribute('disabled');
     }, 1000);
   }
 });
-
 
 /**
  * Evento en el boton submit del formulario de método de pago
@@ -287,6 +324,11 @@ PAYMENT_METHOD_MODAL_BUTTON.addEventListener('click', function (e) {
  * pero permitiendo cambiar de ventana con el número de orden y mensaje de check out del sitio.
  */
 SELECT_PAYMENT_METHOD_FORM.addEventListener('submit', function (e) {
+  let creditCardOwnerValue = document.getElementById("credit-card-owner").value;
+  let creditCardNumberValue = document.getElementById("credit-card-number").value;
+  let creditCardCVVValue = document.getElementById("credit-card-cvv").value;
+  let creditCardValidDateValue = document.getElementById("credit-card-valid-date").value;
+  let creditCardValidYearValue = document.getElementById("credit-card-valid-year").value;
   if (CREDIT_CARD_RADIO.checked) {
     document.getElementById('selecciona-un-metodo').setAttribute('hidden', '');
     for (let i = 0; i < INPUTS_WIRE_TRANSFER.length; i++) {
@@ -300,15 +342,31 @@ SELECT_PAYMENT_METHOD_FORM.addEventListener('submit', function (e) {
       } else {
         ERROR_MESSAGE_CONTAINER[i].innerText = '';
         e.preventDefault();
-        if (
-          document.getElementById("credit-card-owner").value !== "" &&
-          document.getElementById("credit-card-number").value !== "" &&
-          document.getElementById("credit-card-cvv").value !== "" &&
-          document.getElementById("credit-card-valid-date").value !== "" &&
-          document.getElementById("credit-card-valid-year").value !== "") {
-          window.location.href = "checkout.html";
-        }
       }
+    }
+    if (
+      creditCardOwnerValue !== "" &&
+      creditCardNumberValue !== "" &&
+      creditCardCVVValue !== "" &&
+      creditCardValidDateValue !== "" &&
+      creditCardValidYearValue !== "") {
+      let myProfileInformation = JSON.parse(localStorage.getItem('myProfileInformation'));
+      // Tomar en cuenta que la persona debe tener un perfil creado para que myProfileInformation funcione.
+      cartDataAfterPurchase.customerInformation.name = myProfileInformation.names;
+      cartDataAfterPurchase.customerInformation.address = document.getElementById('address-information').value;
+      cartDataAfterPurchase.customerInformation.city = document.getElementById('city-information').value;
+      cartDataAfterPurchase.customerInformation.country = document.getElementById('country-information').value;
+      cartDataAfterPurchase.customerInformation.zipcode = document.getElementById('zipcode-information').value;
+      cartDataAfterPurchase.productInformation = cartProducts.articles;
+      cartDataAfterPurchase.creditCardInformation.creditCardOwner = creditCardOwnerValue;
+      cartDataAfterPurchase.creditCardInformation.creditCardNumber = creditCardNumberValue;
+      cartDataAfterPurchase.creditCardInformation.creditCardCVV = creditCardCVVValue;
+      cartDataAfterPurchase.creditCardInformation.creditCardValidDate = creditCardValidDateValue;
+      cartDataAfterPurchase.creditCardInformation.creditCardValidYear = creditCardValidYearValue;
+      cartDataAfterPurchase.purchaseInformation.shippingMethod = document.getElementById('tipo-envio').value;
+      cartDataAfterPurchase.purchaseInformation.currencyExchange = CURRENCY_EXCHANGE;
+      cartDataAfterPurchase.purchaseInformation.totalPurchase = document.getElementById('total-after-shipping').innerText.replace('UYU' || 'USD', '').trim();
+      OBJECT_TO_TEXT('http://localhost:3000/postData');
     }
   } else if (WIRE_TRANSFER_RADIO.checked) {
     document.getElementById('selecciona-un-metodo').setAttribute('hidden', '');
@@ -321,14 +379,22 @@ SELECT_PAYMENT_METHOD_FORM.addEventListener('submit', function (e) {
         e.preventDefault();
         ERROR_MESSAGE_CONTAINER_WT[i].innerText = 'campo requerido';
       } else {
-        if (
-          document.getElementById("wire-transfer-number").value !== "") {
-          window.location.href = "checkout.html";
-        }
         ERROR_MESSAGE_CONTAINER_WT[i].innerText = '';
         e.preventDefault();
-        window.location.href = "checkout.html";
       }
+    }
+    if (document.getElementById("wire-transfer-number").value !== "") {
+      let myProfileInformation = JSON.parse(localStorage.getItem('myProfileInformation'));
+      cartDataAfterPurchase.customerInformation.name = myProfileInformation.names;
+      cartDataAfterPurchase.customerInformation.address = document.getElementById('address-information').value;
+      cartDataAfterPurchase.customerInformation.city = document.getElementById('city-information').value;
+      cartDataAfterPurchase.customerInformation.country = document.getElementById('country-information').value;
+      cartDataAfterPurchase.customerInformation.zipcode = document.getElementById('zipcode-information').value;
+      cartDataAfterPurchase.productInformation = cartProducts.articles;
+      cartDataAfterPurchase.purchaseInformation.shippingMethod = document.getElementById('tipo-envio').value;
+      cartDataAfterPurchase.purchaseInformation.currencyExchange = CURRENCY_EXCHANGE;
+      cartDataAfterPurchase.purchaseInformation.totalPurchase = document.getElementById('total-after-shipping').innerText.replace('UYU' || 'USD', '').trim();
+      OBJECT_TO_TEXT('http://localhost:3000/postData');
     }
   } else {
     e.preventDefault();
