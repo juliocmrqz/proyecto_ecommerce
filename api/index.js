@@ -104,8 +104,6 @@ appExpress.post('/postData', (req, res) => {
         });
 });
 
-
-
 appExpress.listen(port, () => {
     console.log(colors.green(`Estoy trabajando en el siguiente puerto: http://localhost:${port}`));
 });

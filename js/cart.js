@@ -22,40 +22,13 @@ const SUBTOTAL_INDIVIDUAL_CONTAINER = document.getElementsByClassName('subtotal_
 let cartProducts;
 let subtotal = 0;
 
-var cartDataAfterPurchase = {
-  customerInformation: {
-    name: null,
-    address: null,
-    city: null,
-    country: null,
-    zipcode: null
-  },
-  productInformation: null,
-  creditCardInformation: {
-    creditCardOwner: null,
-    creditCardNumber: null,
-    creditCardCVV: null,
-    creditCardValidDate: null,
-    creditCardValidYear: null
-  },
-  wireTransferInformation: {
-    wireTransferNumber: null
-  },
-  purchaseInformation: {
-    shippingMethod: null,
-    totalPurchase: null,
-    purchaseCurrency: 'UYU',
-    currencyExchange: null
-  }
-};
-
 var OBJECT_TO_TEXT = function (url) {
   fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(cartDataAfterPurchase)
+    body: JSON.stringify(getAndGenerateOrderInformation())
   }).then(window.location.href = "checkout.html");
 }
 
@@ -310,6 +283,52 @@ PAYMENT_METHOD_MODAL_BUTTON.addEventListener('click', function (e) {
 });
 
 /**
+ * 
+ * @param {number} min número entero minimo a recibir para generar un número aleatorio
+ * @param {number} max número entero máximo a recibir para generar un número aleatorio
+ * @returns número entero al azar dentro del rango comprendido que se le pasó
+ */
+function getRandomArbitrary(min, max) {
+  return parseInt(Math.random() * (max - min) + min);
+}
+
+/**
+ * 
+ * @returns Un objeto el cual puede ser enviado a través del método POST
+ */
+function getAndGenerateOrderInformation() {
+  var cartDataAfterPurchase = {
+    orderNumber: getRandomArbitrary(1, 100000000000),
+    customerInformation: {
+      name: JSON.parse(localStorage.getItem('myProfileInformation')).names,
+      address: document.getElementById('address-information').value,
+      city: document.getElementById('city-information').value,
+      country: document.getElementById('country-information').value,
+      zipcode: document.getElementById('zipcode-information').value
+    },
+    productInformation: cartProducts.articles,
+    creditCardInformation: {
+      creditCardOwner: document.getElementById("credit-card-owner").value,
+      creditCardNumber: document.getElementById("credit-card-number").value,
+      creditCardCVV: document.getElementById("credit-card-cvv").value,
+      creditCardValidDate: document.getElementById("credit-card-valid-date").value,
+      creditCardValidYear: document.getElementById("credit-card-valid-year").value
+    },
+    wireTransferInformation: {
+      wireTransferNumber: document.getElementById("wire-transfer-number").value
+    },
+    purchaseInformation: {
+      shippingMethod: document.getElementById('tipo-envio').value,
+      totalPurchase: document.getElementById('total-after-shipping').innerText.replace('UYU' || 'USD', '').trim(),
+      purchaseCurrency: 'UYU',
+      currencyExchange: CURRENCY_EXCHANGE
+    }
+  };
+  sessionStorage.setItem('orderNumber', cartDataAfterPurchase.orderNumber);
+  return cartDataAfterPurchase;
+}
+
+/**
  * Evento en el boton submit del formulario de método de pago
  * evalua si algún input radio con el método de pago está seleccionado
  * de no estarlo muestra un mensaje para elegir método de pago
@@ -324,11 +343,11 @@ PAYMENT_METHOD_MODAL_BUTTON.addEventListener('click', function (e) {
  * pero permitiendo cambiar de ventana con el número de orden y mensaje de check out del sitio.
  */
 SELECT_PAYMENT_METHOD_FORM.addEventListener('submit', function (e) {
-  let creditCardOwnerValue = document.getElementById("credit-card-owner").value;
-  let creditCardNumberValue = document.getElementById("credit-card-number").value;
-  let creditCardCVVValue = document.getElementById("credit-card-cvv").value;
-  let creditCardValidDateValue = document.getElementById("credit-card-valid-date").value;
-  let creditCardValidYearValue = document.getElementById("credit-card-valid-year").value;
+  let creditCardOwnerValue = document.getElementById("credit-card-owner").value,
+    creditCardNumberValue = document.getElementById("credit-card-number").value,
+    creditCardCVVValue = document.getElementById("credit-card-cvv").value,
+    creditCardValidDateValue = document.getElementById("credit-card-valid-date").value,
+    creditCardValidYearValue = document.getElementById("credit-card-valid-year").value;
   if (CREDIT_CARD_RADIO.checked) {
     document.getElementById('selecciona-un-metodo').setAttribute('hidden', '');
     for (let i = 0; i < INPUTS_WIRE_TRANSFER.length; i++) {
@@ -350,22 +369,8 @@ SELECT_PAYMENT_METHOD_FORM.addEventListener('submit', function (e) {
       creditCardCVVValue !== "" &&
       creditCardValidDateValue !== "" &&
       creditCardValidYearValue !== "") {
-      let myProfileInformation = JSON.parse(localStorage.getItem('myProfileInformation'));
       // Tomar en cuenta que la persona debe tener un perfil creado para que myProfileInformation funcione.
-      cartDataAfterPurchase.customerInformation.name = myProfileInformation.names;
-      cartDataAfterPurchase.customerInformation.address = document.getElementById('address-information').value;
-      cartDataAfterPurchase.customerInformation.city = document.getElementById('city-information').value;
-      cartDataAfterPurchase.customerInformation.country = document.getElementById('country-information').value;
-      cartDataAfterPurchase.customerInformation.zipcode = document.getElementById('zipcode-information').value;
-      cartDataAfterPurchase.productInformation = cartProducts.articles;
-      cartDataAfterPurchase.creditCardInformation.creditCardOwner = creditCardOwnerValue;
-      cartDataAfterPurchase.creditCardInformation.creditCardNumber = creditCardNumberValue;
-      cartDataAfterPurchase.creditCardInformation.creditCardCVV = creditCardCVVValue;
-      cartDataAfterPurchase.creditCardInformation.creditCardValidDate = creditCardValidDateValue;
-      cartDataAfterPurchase.creditCardInformation.creditCardValidYear = creditCardValidYearValue;
-      cartDataAfterPurchase.purchaseInformation.shippingMethod = document.getElementById('tipo-envio').value;
-      cartDataAfterPurchase.purchaseInformation.currencyExchange = CURRENCY_EXCHANGE;
-      cartDataAfterPurchase.purchaseInformation.totalPurchase = document.getElementById('total-after-shipping').innerText.replace('UYU' || 'USD', '').trim();
+      getAndGenerateOrderInformation();
       OBJECT_TO_TEXT('http://localhost:3000/postData');
     }
   } else if (WIRE_TRANSFER_RADIO.checked) {
@@ -384,16 +389,7 @@ SELECT_PAYMENT_METHOD_FORM.addEventListener('submit', function (e) {
       }
     }
     if (document.getElementById("wire-transfer-number").value !== "") {
-      let myProfileInformation = JSON.parse(localStorage.getItem('myProfileInformation'));
-      cartDataAfterPurchase.customerInformation.name = myProfileInformation.names;
-      cartDataAfterPurchase.customerInformation.address = document.getElementById('address-information').value;
-      cartDataAfterPurchase.customerInformation.city = document.getElementById('city-information').value;
-      cartDataAfterPurchase.customerInformation.country = document.getElementById('country-information').value;
-      cartDataAfterPurchase.customerInformation.zipcode = document.getElementById('zipcode-information').value;
-      cartDataAfterPurchase.productInformation = cartProducts.articles;
-      cartDataAfterPurchase.purchaseInformation.shippingMethod = document.getElementById('tipo-envio').value;
-      cartDataAfterPurchase.purchaseInformation.currencyExchange = CURRENCY_EXCHANGE;
-      cartDataAfterPurchase.purchaseInformation.totalPurchase = document.getElementById('total-after-shipping').innerText.replace('UYU' || 'USD', '').trim();
+      getAndGenerateOrderInformation();
       OBJECT_TO_TEXT('http://localhost:3000/postData');
     }
   } else {
