@@ -27,7 +27,7 @@ appExpress.get('/categorias', cors(), (req, res) => {
 });
 
 // disponibilizo la categoria de autos
-appExpress.get('/categoria-info', cors(), (req, res) => {
+appExpress.get('/categoria-info', (req, res) => {
     res.sendFile(
         path.join(
             __dirname, 'jsonpack/categories/category.json'
@@ -36,7 +36,7 @@ appExpress.get('/categoria-info', cors(), (req, res) => {
 });
 
 // disponibilizo los productos
-appExpress.get('/productos', cors(), (req, res) => {
+appExpress.get('/productos', (req, res) => {
     res.sendFile(
         path.join(
             __dirname, 'jsonpack/products/products.json'
@@ -45,7 +45,7 @@ appExpress.get('/productos', cors(), (req, res) => {
 });
 
 // disponibilizo la información del producto
-appExpress.get('/producto-info', cors(), (req, res) => {
+appExpress.get('/producto-info', (req, res) => {
     res.sendFile(
         path.join(
             __dirname, 'jsonpack/products/product.json'
@@ -54,7 +54,7 @@ appExpress.get('/producto-info', cors(), (req, res) => {
 });
 
 // disponibilizo los comentarios del producto
-appExpress.get('/producto-comentarios', cors(), (req, res) => {
+appExpress.get('/producto-comentarios', (req, res) => {
     res.sendFile(
         path.join(
             __dirname, 'jsonpack/products/product_comments.json'
@@ -63,7 +63,7 @@ appExpress.get('/producto-comentarios', cors(), (req, res) => {
 });
 
 // disponibilizo los artículos del carrito
-appExpress.get('/carrito', cors(), (req, res) => {
+appExpress.get('/carrito', (req, res) => {
     res.sendFile(
         path.join(
             __dirname, 'jsonpack/cart/cart.json'
@@ -72,7 +72,7 @@ appExpress.get('/carrito', cors(), (req, res) => {
 });
 
 // disponibilizo el mensaje de publicación exitosa en vender
-appExpress.get('/publicacion-exitosa', cors(), (req, res) => {
+appExpress.get('/publicacion-exitosa', (req, res) => {
     res.sendFile(
         path.join(
             __dirname, 'jsonpack/products/successful_publication.json'
@@ -81,7 +81,7 @@ appExpress.get('/publicacion-exitosa', cors(), (req, res) => {
 });
 
 // disponibilizo el mensaje de compra exitosa
-appExpress.get('/compra-exitosa', cors(), (req, res) => {
+appExpress.get('/compra-exitosa', (req, res) => {
     res.sendFile(
         path.join(
             __dirname, '/jsonpack/cart/successful_purchase.json'
@@ -89,8 +89,10 @@ appExpress.get('/compra-exitosa', cors(), (req, res) => {
     )
 });
 
+// Recibe los datos enviados desde el carrito de compras para crear un
+// archivo .json con los datos de la compra.
 appExpress.post('/postData', (req, res) => {
-    let archivo = uuidv4() + 'test.json'; // por qué funciona el uuidv4 nada más
+    let archivo = uuidv4() + 'test.json';
     fs.writeFile(
         path.join(
             __dirname, `jsonpack/archivoTexto/${archivo}`
@@ -104,6 +106,7 @@ appExpress.post('/postData', (req, res) => {
         });
 });
 
+// inicializa el servidor y devuelve un mensaje si está funcionando correctamente.
 appExpress.listen(port, () => {
     console.log(colors.green(`Estoy trabajando en el siguiente puerto: http://localhost:${port}`));
 });

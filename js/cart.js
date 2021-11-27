@@ -22,6 +22,11 @@ const SUBTOTAL_INDIVIDUAL_CONTAINER = document.getElementsByClassName('subtotal_
 let cartProducts;
 let subtotal = 0;
 
+/**
+ * @param {string} url la url a donde estará aplicando el método POST
+ * Además de esto recibe una función que está devolviendo el objeto que será enviado al archivo .json para su
+ * escritura en un archivo, el mismo también podría ser manipulado para hacer una confirmación de compra.
+ */
 var OBJECT_TO_TEXT = function (url) {
   fetch(url, {
     method: 'POST',
@@ -328,6 +333,8 @@ function getAndGenerateOrderInformation() {
   return cartDataAfterPurchase;
 }
 
+
+
 /**
  * Evento en el boton submit del formulario de método de pago
  * evalua si algún input radio con el método de pago está seleccionado
@@ -370,7 +377,6 @@ SELECT_PAYMENT_METHOD_FORM.addEventListener('submit', function (e) {
       creditCardValidDateValue !== "" &&
       creditCardValidYearValue !== "") {
       // Tomar en cuenta que la persona debe tener un perfil creado para que myProfileInformation funcione.
-      getAndGenerateOrderInformation();
       OBJECT_TO_TEXT('http://localhost:3000/postData');
     }
   } else if (WIRE_TRANSFER_RADIO.checked) {
@@ -389,7 +395,6 @@ SELECT_PAYMENT_METHOD_FORM.addEventListener('submit', function (e) {
       }
     }
     if (document.getElementById("wire-transfer-number").value !== "") {
-      getAndGenerateOrderInformation();
       OBJECT_TO_TEXT('http://localhost:3000/postData');
     }
   } else {
